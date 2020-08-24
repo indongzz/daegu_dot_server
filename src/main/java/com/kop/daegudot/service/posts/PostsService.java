@@ -24,7 +24,7 @@ public class PostsService {
     // drity checking
     public Long update(Long id, PostsUpdateRequestDto requestDto) {
         Posts posts = postsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+                .orElseThrow(() -> new IllegalArgumentException("There is no id =" + id));
         posts.update(requestDto.getTitle(), requestDto.getContent());
 
         return id;
@@ -33,7 +33,7 @@ public class PostsService {
     // drity checking
     public PostsResponseDto findById(Long id) {
         Posts entity = postsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+                .orElseThrow(() -> new IllegalArgumentException("There is no id =" + id));
 
         return new PostsResponseDto(entity);
     }
