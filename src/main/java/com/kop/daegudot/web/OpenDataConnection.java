@@ -1,6 +1,7 @@
 package com.kop.daegudot.web;
 
 import com.kop.daegudot.web.dto.OpendataDto;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
