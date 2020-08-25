@@ -17,10 +17,15 @@ public class Opendatas {
     private long placeId;
 
 
+    @Column
     private String address;
+    @Column (length = 5000)
     private String attractContents;
+    @Column
     private String attractName;
+    @Column
     private String homepage;
+    @Column
     private String telephone;
 
     @Builder

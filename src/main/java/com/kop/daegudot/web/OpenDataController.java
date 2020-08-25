@@ -18,7 +18,13 @@ import java.util.List;
 public class OpenDataController {
     private final OpendatasService mOpendatasService;
 
+    /* method: GET
+    SQL: INSERT */
     @GetMapping("/parsing/opendatas")
-    public ArrayList<OpendataDto> saveAll(){ return new OpenDataConnection().opendatasHttp();}
+    public void saveAll(){
+        ArrayList<OpendataDto> mOpendataDtoArrayList = new ArrayList<>();
+        mOpendataDtoArrayList = new OpenDataConnection().opendatasHttp();   //Allocate result of XML parsing to new array list
+        mOpendatasService.saveAll(mOpendataDtoArrayList);
+    }
 
 }

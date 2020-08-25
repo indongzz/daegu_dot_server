@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 public class OpenDataConnection {
 
+    /* Get data based on XML from url*/
     public ArrayList<OpendataDto> opendatasHttp(){
         ArrayList<OpendataDto> mArrayList = new ArrayList<>();
 
@@ -29,11 +30,12 @@ public class OpenDataConnection {
             Document document = documentBuilder.parse(url);
 
             document.getDocumentElement().normalize();
-            System.out.println("Root element : " + document.getDocumentElement().getNodeName());
 
+            //Get data by tag name
             NodeList nodeList = document.getElementsByTagName("list");
-            System.out.println("파싱 개수 : " + nodeList.getLength());
 
+            /* Get data by tag value
+            Add to arraylist based on opendata dto*/
             for(int i=0; i<nodeList.getLength();i++){
                 Node node = nodeList.item(i);
                 if(node.getNodeType() == Node.ELEMENT_NODE){
