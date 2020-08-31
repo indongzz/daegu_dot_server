@@ -1,22 +1,36 @@
-package com.kop.daegudot.web.dto;
+package com.kop.daegudot.domain.places;
 
-import com.kop.daegudot.domain.opendatas.Opendatas;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
+import javax.persistence.*;
+
 @Getter
 @NoArgsConstructor
-public class OpendataDto {
+@Entity
+public class Places {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long placeId;
+
+
+    @Column
     private String address;
+    @Column (length = 5000)
     private String attractContents;
+    @Column
     private String attractName;
+    @Column
     private String homepage;
+    @Column
     private String telephone;
 
     @Builder
-    public OpendataDto(String address, String attractContents, String attractName, String homepage,
-                       String telephone){
+    public Places(String address, String attractContents, String attractName, String homepage,
+                  String telephone) {
         this.address = address;
         this.attractContents = attractContents;
         this.attractName = attractName;
@@ -24,8 +38,4 @@ public class OpendataDto {
         this.telephone = telephone;
     }
 
-    public Opendatas toEntity() { return Opendatas.builder().address(address)
-        .attractContents(attractContents).attractName(attractName).homepage(homepage)
-            .telephone(telephone).build();
-    }
 }
