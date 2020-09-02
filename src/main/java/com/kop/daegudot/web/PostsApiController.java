@@ -18,16 +18,22 @@ public class PostsApiController {
 
     private final PostsService postsService;
 
+    /* method: POST
+    SQL: INSERT */
     @PostMapping("api/v1/posts")
     public Long save(@RequestBody PostsSaveRequestDto requestDto) {
         return postsService.save(requestDto);
     }
 
+    /* method: POST
+    SQL: UPDATE */
     @PutMapping("/api/v1/posts/{id}")
     public Long update(@PathVariable long id, @RequestBody PostsUpdateRequestDto requestDto) {
         return postsService.update(id, requestDto);
     }
 
+    /* method: POST
+    SQL: SELECT */
     @GetMapping("/api/v1/posts/{id}")
     public PostsResponseDto findById(@PathVariable Long id) {
         return postsService.findById(id);

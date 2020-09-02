@@ -1,0 +1,17 @@
+# Connect to MySQL
+server:
+  address: localhost
+  port: 8080
+
+# MySQL setting
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://connection address/database name?serverTimezone=UTC&characterEncoding=UTF-8
+    username: connection user name
+    password: connection password
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: true # Make DDL and apply to DB
+    show-sql: true
