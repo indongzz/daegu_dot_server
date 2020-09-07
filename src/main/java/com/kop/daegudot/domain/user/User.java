@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,4 +24,13 @@ public class User {
 
     private String email;
     private String nickname;
+    private char type;
+
+    @Builder
+    public User (String email, String nickname, String password, char type) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.type = type;
+    }
 }
