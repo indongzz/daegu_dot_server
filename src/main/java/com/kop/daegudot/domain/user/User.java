@@ -24,7 +24,7 @@ public class User {
 
     private String email;
     private String nickname;
-    private char type;
+    private char type; //G: google, K: kakao, N: normal
 
     @Builder
     public User (String email, String nickname, String password, char type) {

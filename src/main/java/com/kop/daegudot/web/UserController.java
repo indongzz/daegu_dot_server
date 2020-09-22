@@ -1,6 +1,5 @@
 package com.kop.daegudot.web;
 
-import com.kop.daegudot.domain.user.User;
 import com.kop.daegudot.service.user.UserService;
 import com.kop.daegudot.web.dto.user.UserLoginDto;
 import com.kop.daegudot.web.dto.user.UserResponseDto;
