@@ -1,8 +1,10 @@
 package com.kop.daegudot.web;
 
+import com.kop.daegudot.domain.mainschedule.MainSchedule;
 import com.kop.daegudot.service.mainshcedule.MainScheduleService;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleRegisterDto;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleResponseDto;
+import com.kop.daegudot.web.dto.mainshcedule.MainScheduleUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,4 +34,9 @@ public class MainScheduleController {
         mMainScheduleService.DeleteById(mainscheduleId);
     }
 
+    //Update MainSchedule
+    @PutMapping("/schedule/main/update/{mainscheduleId}")
+    public Long UpdateById(@PathVariable long mainscheduleId, MainScheduleUpdateDto mainScheduleUpdateDto){
+        return mMainScheduleService.UpdateById(mainscheduleId, mainScheduleUpdateDto);
+    }
 }

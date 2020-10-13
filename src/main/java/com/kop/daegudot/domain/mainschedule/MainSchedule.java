@@ -37,4 +37,9 @@ public class MainSchedule {
         this.title = title;
         this.user = user;
     }
+    public void update(LocalDate startDate, LocalDate endDate, String title){
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.title = title;
+    }
 }

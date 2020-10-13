@@ -2,10 +2,9 @@ package com.kop.daegudot.service.mainshcedule;
 
 import com.kop.daegudot.domain.mainschedule.MainSchedule;
 import com.kop.daegudot.domain.mainschedule.MainScheduleRepository;
-import com.kop.daegudot.domain.user.User;
-import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleRegisterDto;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleResponseDto;
+import com.kop.daegudot.web.dto.mainshcedule.MainScheduleUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +22,7 @@ public class MainScheduleService {
         return mMainScheduleRepository.save(mainScheduleRegisterDto.toEntity()).getId();
     }
 
-    //SELECT * from MainSchedule WHERE user_id = ?
+    //SELECT * FROM main_schedule WHERE user_id = ?
     public ArrayList<MainScheduleResponseDto> findByUserId(long userId){
         ArrayList<MainSchedule> mainScheduleList;
         ArrayList<MainScheduleResponseDto> mainScheduleResponseDtoArrayList = new ArrayList<>();
@@ -36,7 +35,17 @@ public class MainScheduleService {
         return mainScheduleResponseDtoArrayList;
     }
 
+    //DELETE
     public void DeleteById(long mainScheduleId){
         mMainScheduleRepository.deleteById(mainScheduleId);
+    }
+
+    //UPDATE
+    public Long UpdateById(long mainScheduleId, MainScheduleUpdateDto mainScheduleUpdateDto){
+        MainSchedule mainSchedule = mMainScheduleRepository.findById(mainScheduleId);
+        mainSchedule.update(mainScheduleUpdateDto.getStartDate(), mainScheduleUpdateDto.getEndDate(),
+                mainScheduleUpdateDto.getTitle());
+
+        return mainScheduleId;
     }
 }
