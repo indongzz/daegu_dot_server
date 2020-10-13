@@ -42,4 +42,11 @@ public class SubSchedule {
         this.mainSchedule = mainSchedule;
     }
 
+    public void update(LocalDate date, LocalTime startTime, LocalTime endTime,
+                       Places places){
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.places = places;
+    }
 }
