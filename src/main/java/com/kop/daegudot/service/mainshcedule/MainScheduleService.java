@@ -35,4 +35,8 @@ public class MainScheduleService {
         }
         return mainScheduleResponseDtoArrayList;
     }
+
+    public void DeleteById(long mainScheduleId){
+        mMainScheduleRepository.deleteById(mainScheduleId);
+    }
 }

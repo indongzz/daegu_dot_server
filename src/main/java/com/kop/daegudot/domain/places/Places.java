@@ -14,7 +14,7 @@ public class Places {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long placeId;
+    private long id;
 
 
     @Column
@@ -27,6 +27,8 @@ public class Places {
     private String homepage;
     @Column
     private String telephone;
+
+
 
     @Builder
     public Places(String address, String attractContents, String attractName, String homepage,

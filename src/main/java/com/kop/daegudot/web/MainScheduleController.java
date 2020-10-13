@@ -24,4 +24,12 @@ public class MainScheduleController {
     public ArrayList<MainScheduleResponseDto> findByUserId(@PathVariable long userId){
         return mMainScheduleService.findByUserId(userId);
     }
+
+    /* Delete MainSchedule
+    if MainSchedule is deleted, all of the SubSchedule that is related MainSchedule is, too.*/
+    @GetMapping("/schedule/main/delete/{mainscheduleId}")
+    public void DeleteById(@PathVariable long mainscheduleId){
+        mMainScheduleService.DeleteById(mainscheduleId);
+    }
+
 }
