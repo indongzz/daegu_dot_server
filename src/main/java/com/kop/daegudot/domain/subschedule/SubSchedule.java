@@ -34,7 +34,7 @@ public class SubSchedule {
 
     @Builder
     public SubSchedule(LocalDate date, LocalTime startTime, LocalTime endTime,
-                       Places places, MainSchedule mainSchedule){
+                       Places places, MainSchedule mainSchedule) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -43,7 +43,7 @@ public class SubSchedule {
     }
 
     public void update(LocalDate date, LocalTime startTime, LocalTime endTime,
-                       Places places){
+                       Places places) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;

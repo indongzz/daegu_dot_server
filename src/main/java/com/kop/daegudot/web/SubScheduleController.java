@@ -18,25 +18,25 @@ public class SubScheduleController {
 
     //Add Subschedule
     @PostMapping("/schedule/sub/register")
-    public Long saveSubSchedule(@RequestBody SubScheduleRegisterDto subScheduleRegisterDto){
+    public Long saveSubSchedule(@RequestBody SubScheduleRegisterDto subScheduleRegisterDto) {
         return mSubScheduleService.saveSubSchedule(subScheduleRegisterDto);
     }
 
     //Subschedule inquiry
     @GetMapping("/schedule/sub/{mainscheduleId}")
-    public ArrayList<SubScheduleResponseDto> findByMainScheduleId(@PathVariable long mainscheduleId){
+    public ArrayList<SubScheduleResponseDto> findByMainScheduleId(@PathVariable long mainscheduleId) {
         return mSubScheduleService.findByMainScheduleId(mainscheduleId);
     }
 
     //Delete SubSchedule
     @GetMapping("/schedule/sub/delete/{subscheduleId}")
-    public void deleteById(@PathVariable long subscheduleId){
+    public void deleteById(@PathVariable long subscheduleId) {
         mSubScheduleService.deleteById(subscheduleId);
     }
 
     //Update SubSchedule
     @PutMapping("/schedule/sub/update/{subscheduleId}")
-    public Long updateById(@PathVariable long subscheduleId, SubScheduleUpdateDto subScheduleUpdateDto){
+    public Long updateById(@PathVariable long subscheduleId, SubScheduleUpdateDto subScheduleUpdateDto) {
         return mSubScheduleService.updateById(subscheduleId, subScheduleUpdateDto);
     }
 }

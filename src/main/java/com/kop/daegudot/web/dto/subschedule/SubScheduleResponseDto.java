@@ -16,7 +16,7 @@ public class SubScheduleResponseDto {
     private Places places;
     private MainSchedule mainSchedule;
 
-    public SubScheduleResponseDto(SubSchedule subSchedule){
+    public SubScheduleResponseDto(SubSchedule subSchedule) {
         this.date = subSchedule.getDate();
         this.startDate = subSchedule.getStartTime();
         this.endDate = subSchedule.getEndTime();

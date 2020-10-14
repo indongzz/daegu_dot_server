@@ -20,7 +20,7 @@ public class SubScheduleRegisterDto {
     private MainSchedule mainSchedule;
 
     public SubScheduleRegisterDto(LocalDate date, LocalTime startTime, LocalTime endTime,
-                                  Places places, MainSchedule mainSchedule){
+                                  Places places, MainSchedule mainSchedule) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -28,7 +28,7 @@ public class SubScheduleRegisterDto {
         this.mainSchedule = mainSchedule;
     }
 
-    public SubSchedule toEntity(){
+    public SubSchedule toEntity() {
         return SubSchedule.builder().date(date).startTime(startTime).endTime(endTime).
                 places(places).mainSchedule(mainSchedule).build();
     }

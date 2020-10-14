@@ -15,7 +15,7 @@ public class SubScheduleUpdateDto {
     private LocalTime endTime;
     private Places places;
 
-    public SubScheduleUpdateDto(LocalDate date, LocalTime startTime, LocalTime endTime, Places places){
+    public SubScheduleUpdateDto(LocalDate date, LocalTime startTime, LocalTime endTime, Places places) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
