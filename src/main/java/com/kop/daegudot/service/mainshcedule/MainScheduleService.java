@@ -18,17 +18,17 @@ public class MainScheduleService {
 
     // INSERT to MainSchedule
     @Transactional
-    public Long saveMainSchedule(MainScheduleRegisterDto mainScheduleRegisterDto){
+    public Long saveMainSchedule(MainScheduleRegisterDto mainScheduleRegisterDto) {
         return mMainScheduleRepository.save(mainScheduleRegisterDto.toEntity()).getId();
     }
 
     //SELECT * FROM main_schedule WHERE user_id = ?
-    public ArrayList<MainScheduleResponseDto> findByUserId(long userId){
+    public ArrayList<MainScheduleResponseDto> findByUserId(long userId) {
         ArrayList<MainSchedule> mainScheduleList;
         ArrayList<MainScheduleResponseDto> mainScheduleResponseDtoArrayList = new ArrayList<>();
 
         mainScheduleList = mMainScheduleRepository.findByUserId(userId);
-        for(int i=0; i<mainScheduleList.size();i++){
+        for(int i=0; i<mainScheduleList.size();i++) {
             MainScheduleResponseDto mainScheduleResponseDto = new MainScheduleResponseDto(mainScheduleList.get(i));
             mainScheduleResponseDtoArrayList.add(mainScheduleResponseDto);
         }
@@ -36,12 +36,12 @@ public class MainScheduleService {
     }
 
     //DELETE
-    public void DeleteById(long mainScheduleId){
+    public void deleteById(long mainScheduleId) {
         mMainScheduleRepository.deleteById(mainScheduleId);
     }
 
     //UPDATE
-    public Long UpdateById(long mainScheduleId, MainScheduleUpdateDto mainScheduleUpdateDto){
+    public Long updateById(long mainScheduleId, MainScheduleUpdateDto mainScheduleUpdateDto) {
         MainSchedule mainSchedule = mMainScheduleRepository.findById(mainScheduleId);
         mainSchedule.update(mainScheduleUpdateDto.getStartDate(), mainScheduleUpdateDto.getEndDate(),
                 mainScheduleUpdateDto.getTitle());

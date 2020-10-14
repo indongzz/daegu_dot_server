@@ -31,13 +31,14 @@ public class MainSchedule {
     private User user;
 
     @Builder
-    public MainSchedule(LocalDate startDate, LocalDate endDate, String title, User user){
+    public MainSchedule(LocalDate startDate, LocalDate endDate, String title, User user) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
         this.user = user;
     }
-    public void update(LocalDate startDate, LocalDate endDate, String title){
+
+    public void update(LocalDate startDate, LocalDate endDate, String title) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;

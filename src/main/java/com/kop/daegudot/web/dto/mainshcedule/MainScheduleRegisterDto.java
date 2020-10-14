@@ -14,14 +14,14 @@ public class MainScheduleRegisterDto {
     private String title;
     private User user;
 
-    public MainScheduleRegisterDto(LocalDate startDate, LocalDate endDate, String title, User user){
+    public MainScheduleRegisterDto(LocalDate startDate, LocalDate endDate, String title, User user) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
         this.user = user;
     }
 
-    public MainSchedule toEntity(){
+    public MainSchedule toEntity() {
         return MainSchedule.builder().startDate(startDate).endDate(endDate).title(title).user(user).build();
     }
 }

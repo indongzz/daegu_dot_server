@@ -12,7 +12,7 @@ public class MainScheduleUpdateDto {
     private LocalDate endDate;
     private String title;
 
-    public MainScheduleUpdateDto(LocalDate startDate, LocalDate endDate, String title){
+    public MainScheduleUpdateDto(LocalDate startDate, LocalDate endDate, String title) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
