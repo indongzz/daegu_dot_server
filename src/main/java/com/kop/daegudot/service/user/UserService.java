@@ -45,7 +45,7 @@ public class UserService {
     //Make a JWT when user logins.
     public String createToken(String email, String password){
         User user = mUserRepository.findByEmail(email);
-        if(!user.getPassword().equals(password));
+        if(!user.getPassword().equals(password)) return "NULL";
         return mJwtTokenProvider.createToken(email);
     }
 }

@@ -1,8 +1,6 @@
 package com.kop.daegudot.web.JWT;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
@@ -31,5 +29,21 @@ public class JwtTokenProvider {
                 .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+    }
+
+    //JWT에서 값 추출하기
+    public String getSubeject(String token){
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    //JWT 유효성 확인
+    public boolean validateToken(String token){
+        try{
+            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            if(claimsJws.getBody().getExpiration().before(new Date())) return false;
+            else return true;
+        } catch (JwtException | IllegalArgumentException e){
+            return false;
+        }
     }
 }
