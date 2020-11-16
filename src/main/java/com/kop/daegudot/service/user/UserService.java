@@ -2,6 +2,7 @@ package com.kop.daegudot.service.user;
 
 import com.kop.daegudot.domain.user.User;
 import com.kop.daegudot.domain.user.UserRepository;
+import com.kop.daegudot.web.JWT.JwtTokenProvider;
 import com.kop.daegudot.web.dto.user.UserLoginDto;
 import com.kop.daegudot.web.dto.user.UserResponseDto;
 import com.kop.daegudot.web.dto.user.UserRegisterDto;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
     private final UserRepository mUserRepository;
+    private final JwtTokenProvider mJwtTokenProvider;
 
     // INSERT
     @Transactional
@@ -38,5 +40,12 @@ public class UserService {
         User userEntity = mUserRepository.findByEmailAndPassword(userLoginDto.getEmail(),
                 userLoginDto.getPassword());
         return new UserResponseDto(userEntity);
+    }
+
+    //Make a JWT when user logins.
+    public String createToken(String email, String password){
+        User user = mUserRepository.findByEmail(email);
+        if(!user.getPassword().equals(password));
+        return mJwtTokenProvider.createToken(email);
     }
 }
