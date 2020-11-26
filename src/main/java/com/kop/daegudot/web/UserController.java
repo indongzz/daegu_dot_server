@@ -49,7 +49,7 @@ public class UserController {
         return ResponseEntity.ok().body(new TokenResponseDto(token, "bearer"));
     }
 
-    @GetMapping("/user/login")
+    @GetMapping("user/login")
     public ResponseEntity<UserResponseDto> getUserFromToken(HttpServletRequest request){
         String email = (String) request.getAttribute("email");
         System.out.println("email ::: " + email);
