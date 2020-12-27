@@ -1,9 +1,11 @@
-package com.kop.daegudot.web.dto.hashtag;
+package com.kop.daegudot.web.dto.recommend;
 
+import com.kop.daegudot.domain.hashtag.Hashtag;
 import com.kop.daegudot.domain.mainschedule.MainSchedule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import sun.applet.Main;
+
+import java.util.ArrayList;
 
 @Getter
 @NoArgsConstructor
@@ -11,10 +13,12 @@ public class RecommendScheduleUpdateDto {
     private String title;
     private String content;
     private MainSchedule mainSchedule;
+    private ArrayList<Hashtag> hashtags;
 
-    public RecommendScheduleUpdateDto(String title, String content, MainSchedule mainSchedule){
+    public RecommendScheduleUpdateDto(String title, String content, MainSchedule mainSchedule, ArrayList<Hashtag> hastags){
         this.title = title;
         this.content = content;
         this.mainSchedule = mainSchedule;
+        this.hashtags = hastags;
     }
 }

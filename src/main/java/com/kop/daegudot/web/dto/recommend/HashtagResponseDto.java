@@ -1,4 +1,4 @@
-package com.kop.daegudot.web.dto.hashtag;
+package com.kop.daegudot.web.dto.recommend;
 
 import com.kop.daegudot.domain.hashtag.Hashtag;
 import lombok.Getter;

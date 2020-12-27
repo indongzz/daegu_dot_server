@@ -1,15 +1,15 @@
 package com.kop.daegudot.domain.recommendschedule;
 
+import com.kop.daegudot.domain.hashtag.Hashtag;
 import com.kop.daegudot.domain.mainschedule.MainSchedule;
 
 import javax.persistence.*;
 
-import com.kop.daegudot.domain.schedulehashtag.ScheduleHashtag;
-import com.kop.daegudot.web.dto.hashtag.RecommendScheduleUpdateDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,19 +30,22 @@ public class RecommendSchedule {
     @Column(columnDefinition = "TEXT", length = 2048)
     private String content;
 
-    @OneToMany(mappedBy = "recommendSchedule", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<ScheduleHashtag> scheduleHashtags;
+    @OneToMany
+    @JoinColumn(name = "hashtag_id")
+    private List<Hashtag> hashtags = new ArrayList<>();
 
     @Builder
-    public RecommendSchedule(MainSchedule mainSchedule, String title, String content){
+    public RecommendSchedule(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags){
         this.mainSchedule = mainSchedule;
         this.title = title;
         this.content = content;
+        this.hashtags = hashtags;
     }
 
-    public void update(MainSchedule mainSchedule, String title, String content){
+    public void update(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags){
         this.mainSchedule = mainSchedule;
         this.title = title;
         this.content = content;
+        this.hashtags = hashtags;
     }
 }
