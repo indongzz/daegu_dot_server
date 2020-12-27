@@ -24,7 +24,7 @@ public class RecommendController {
     //추천된 일정 나열하기
     @PostMapping("/recommend")
     public ArrayList<RecommendScheduleResponseDto> listRecommendSchedule(){
-
+        return mRecommendService.findAllRecommendSchedule();
     }
 
     //추천 수정하기
