@@ -45,7 +45,8 @@ public class SubScheduleService {
 
     //UPDATE
     public Long updateById(long subscheduleId, SubScheduleUpdateDto subScheduleUpdateDto){
-        SubSchedule subSchedule = mSubScheduleRepository.findById(subscheduleId);
+        SubSchedule subSchedule = mSubScheduleRepository.findById(subscheduleId)
+                .orElseThrow(() -> new IllegalArgumentException("There is no id = "+subscheduleId));
         subSchedule.update(subScheduleUpdateDto.getDate(), subScheduleUpdateDto.getStartTime(),
                 subScheduleUpdateDto.getEndTime(), subScheduleUpdateDto.getPlaces());
         return subscheduleId;

@@ -7,5 +7,4 @@ import java.util.ArrayList;
 
 public interface SubScheduleRepository extends JpaRepository<SubSchedule, Long> {
     ArrayList<SubSchedule> findByMainScheduleId(long id);
-    SubSchedule findById(long id);
 }
