@@ -42,7 +42,8 @@ public class MainScheduleService {
 
     //UPDATE
     public Long updateById(long mainScheduleId, MainScheduleUpdateDto mainScheduleUpdateDto) {
-        MainSchedule mainSchedule = mMainScheduleRepository.findById(mainScheduleId);
+        MainSchedule mainSchedule = mMainScheduleRepository.findById(mainScheduleId)
+                .orElseThrow(()->new IllegalArgumentException("There is no id = " + mainScheduleId));
         mainSchedule.update(mainScheduleUpdateDto.getStartDate(), mainScheduleUpdateDto.getEndDate(),
                 mainScheduleUpdateDto.getTitle());
 
