@@ -26,7 +26,7 @@ public class CommentRegisterDto {
     }
 
     public Comment toEntity(){
-        return Comment.builder().comments(comments).user(user).star(star).
+        return Comment.builder().comments(comments).user(user).star(star)
                 .dateTime(dateTime).recommendSchedule(recommendSchedule).build();
     }
 }

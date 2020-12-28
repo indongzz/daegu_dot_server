@@ -40,8 +40,9 @@ public class CommentService {
 
     //Update
     public Long updateComment(long id, CommentUpdateDto commentUpdateDto){
-        Comment comment = mCommentRepository.findById(id);
-        comment.update(commentUpdateDto.getComments());
+        Comment comment = mCommentRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("There is no id =" + id));
+        comment.update(commentUpdateDto.getDateTime(), comment.getComments(), comment.getStar());
         return id;
     }
 
