@@ -41,7 +41,8 @@ public class RecommendService {
 
     //UPDATE
     public Long updateRecommendSchedule(long recommendScheduleId, RecommendScheduleUpdateDto recommendScheduleUpdateDto){
-        RecommendSchedule recommendSchedule = mRecommendScheduleRepository.findById(recommendScheduleId);
+        RecommendSchedule recommendSchedule = mRecommendScheduleRepository.findById(recommendScheduleId)
+                .orElseThrow(()->new IllegalArgumentException("There is no id = "+recommendScheduleId));
         recommendSchedule.update(recommendScheduleUpdateDto.getMainSchedule(), recommendScheduleUpdateDto.getTitle(),
                 recommendScheduleUpdateDto.getContent(), recommendScheduleUpdateDto.getHashtags());
         return recommendScheduleId;
