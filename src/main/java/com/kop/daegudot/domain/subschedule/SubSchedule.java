@@ -2,6 +2,7 @@ package com.kop.daegudot.domain.subschedule;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javax.persistence.*;
 
 import com.kop.daegudot.domain.mainschedule.MainSchedule;
@@ -20,8 +21,8 @@ public class SubSchedule {
     private long id;
 
     private LocalDate date;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     @OneToOne
     @JoinColumn(name="places_id")
@@ -32,8 +33,8 @@ public class SubSchedule {
     private MainSchedule mainSchedule;
 
     @Builder
-    public SubSchedule(LocalDate date, LocalDateTime startTime, LocalDateTime endTime,
-                       Places places, MainSchedule mainSchedule){
+    public SubSchedule(LocalDate date, LocalTime startTime, LocalTime endTime,
+                       Places places, MainSchedule mainSchedule) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -41,4 +42,11 @@ public class SubSchedule {
         this.mainSchedule = mainSchedule;
     }
 
+    public void update(LocalDate date, LocalTime startTime, LocalTime endTime,
+                       Places places) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.places = places;
+    }
 }
