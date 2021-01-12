@@ -3,6 +3,10 @@ package com.kop.daegudot.service.comment;
 
 import com.kop.daegudot.domain.comment.Comment;
 import com.kop.daegudot.domain.comment.CommentRepository;
+import com.kop.daegudot.domain.recommendschedule.RecommendSchedule;
+import com.kop.daegudot.domain.recommendschedule.RecommendScheduleRepository;
+import com.kop.daegudot.domain.user.User;
+import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.dto.comment.CommentRegisterDto;
 import com.kop.daegudot.web.dto.comment.CommentResponseDto;
 import com.kop.daegudot.web.dto.comment.CommentUpdateDto;
@@ -17,6 +21,8 @@ import java.util.Collections;
 @Service
 public class CommentService {
     private final CommentRepository mCommentRepository;
+    private final UserRepository mUserRepository;
+    private final RecommendScheduleRepository mRecommendScheduleRepository;
 
     //SELECT * FROM Comment Where RecommendSchedule.id = ?
     public ArrayList<CommentResponseDto> findAllByRecommendScheduleId(long id){
@@ -35,7 +41,11 @@ public class CommentService {
     //Insert
     @Transactional
     public Long saveComment(CommentRegisterDto commentRegisterDto){
-        return mCommentRepository.save(commentRegisterDto.toEntity()).getId();
+        User user = mUserRepository.findById(commentRegisterDto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("There is no id =" + commentRegisterDto.getUserId()));
+        RecommendSchedule recommendSchedule = mRecommendScheduleRepository.findById(commentRegisterDto.getRecommendScheduleId())
+                .orElseThrow(() -> new IllegalArgumentException("There is no id =" + commentRegisterDto.getRecommendScheduleId()));
+        return mCommentRepository.save(commentRegisterDto.toEntity(user, recommendSchedule)).getId();
     }
 
     //Update

@@ -14,18 +14,19 @@ public class CommentRegisterDto {
     private LocalDateTime dateTime;
     private String comments;
     private int star;
-    private User user;
-    private RecommendSchedule recommendSchedule;
+    private long userId;
+    private long recommendScheduleId;
 
-    public CommentRegisterDto(LocalDateTime dateTime, String comments, int star, User user, RecommendSchedule recommendSchedule){
+    public CommentRegisterDto(LocalDateTime dateTime, String comments, int star, long userId,
+                              long recommendScheduleId){
         this.dateTime = dateTime;
         this.comments = comments;
         this.star = star;
-        this.user = user;
-        this.recommendSchedule = recommendSchedule;
+        this.userId = userId;
+        this.recommendScheduleId = recommendScheduleId;
     }
 
-    public Comment toEntity(){
+    public Comment toEntity(User user, RecommendSchedule recommendSchedule){
         return Comment.builder().comments(comments).user(user).star(star)
                 .dateTime(dateTime).recommendSchedule(recommendSchedule).build();
     }
