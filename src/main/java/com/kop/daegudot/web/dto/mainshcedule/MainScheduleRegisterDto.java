@@ -12,16 +12,16 @@ public class MainScheduleRegisterDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private String title;
-    private User user;
+    private long userId;
 
-    public MainScheduleRegisterDto(LocalDate startDate, LocalDate endDate, String title, User user) {
+    public MainScheduleRegisterDto(LocalDate startDate, LocalDate endDate, String title, long userId) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
-        this.user = user;
+        this.userId = userId;
     }
 
-    public MainSchedule toEntity() {
+    public MainSchedule toEntity(User user) {
         return MainSchedule.builder().startDate(startDate).endDate(endDate).title(title).user(user).build();
     }
 }

@@ -29,9 +29,10 @@ public class MainScheduleController {
 
     /* Delete MainSchedule
     if MainSchedule is deleted, all of the SubSchedule that is related MainSchedule is, too.*/
-    @GetMapping("/schedule/main/delete/{mainscheduleId}")
-    public void deleteById(@PathVariable long mainscheduleId) {
-        mMainScheduleService.deleteById(mainscheduleId);
+    //@RequestMapping(value ="/schedule/main/delete/{mainscheduleId}", method = RequestMethod.DELETE)
+    @DeleteMapping("/schedule/main/delete/{mainscheduleId}")
+    public Long deleteById(@PathVariable long mainscheduleId) {
+        return mMainScheduleService.deleteById(mainscheduleId);
     }
 
     //Update MainSchedule

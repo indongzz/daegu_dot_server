@@ -2,6 +2,8 @@ package com.kop.daegudot.service.mainshcedule;
 
 import com.kop.daegudot.domain.mainschedule.MainSchedule;
 import com.kop.daegudot.domain.mainschedule.MainScheduleRepository;
+import com.kop.daegudot.domain.user.User;
+import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleRegisterDto;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleResponseDto;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleUpdateDto;
@@ -15,11 +17,14 @@ import java.util.*;
 @Service
 public class MainScheduleService {
     private final MainScheduleRepository mMainScheduleRepository;
+    private final UserRepository mUserRepository;
 
     // INSERT to MainSchedule
     @Transactional
     public Long saveMainSchedule(MainScheduleRegisterDto mainScheduleRegisterDto) {
-        return mMainScheduleRepository.save(mainScheduleRegisterDto.toEntity()).getId();
+        User user = mUserRepository.findById(mainScheduleRegisterDto.getUserId())
+                .orElseThrow(()->new IllegalArgumentException("There is no user id = " + mainScheduleRegisterDto.getUserId()));
+        return mMainScheduleRepository.save(mainScheduleRegisterDto.toEntity(user)).getId();
     }
 
     //SELECT * FROM main_schedule WHERE user_id = ?
@@ -36,8 +41,9 @@ public class MainScheduleService {
     }
 
     //DELETE
-    public void deleteById(long mainScheduleId) {
+    public Long deleteById(long mainScheduleId) {
         mMainScheduleRepository.deleteById(mainScheduleId);
+        return mainScheduleId;
     }
 
     //UPDATE
