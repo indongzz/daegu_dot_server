@@ -29,4 +29,6 @@ dependencies {
     implementation 'com.h2database:h2'
     // MySQL
     runtimeOnly 'mysql:mysql-connector-java'
+    // MariaDB
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 }
