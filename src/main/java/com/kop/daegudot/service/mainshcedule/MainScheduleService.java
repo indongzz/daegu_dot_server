@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -50,9 +52,10 @@ public class MainScheduleService {
     public Long updateById(long mainScheduleId, MainScheduleUpdateDto mainScheduleUpdateDto) {
         MainSchedule mainSchedule = mMainScheduleRepository.findById(mainScheduleId)
                 .orElseThrow(()->new IllegalArgumentException("There is no id = " + mainScheduleId));
-        mainSchedule.update(mainScheduleUpdateDto.getStartDate(), mainScheduleUpdateDto.getEndDate(),
+        mainSchedule.update(LocalDate.parse(mainScheduleUpdateDto.getStartDate(), DateTimeFormatter.ISO_DATE),
+                LocalDate.parse(mainScheduleUpdateDto.getEndDate(), DateTimeFormatter.ISO_DATE),
                 mainScheduleUpdateDto.getTitle());
-
+        mMainScheduleRepository.save(mainSchedule);
         return mainScheduleId;
     }
 }
