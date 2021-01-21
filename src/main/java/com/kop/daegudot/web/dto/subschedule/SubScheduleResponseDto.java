@@ -14,13 +14,11 @@ public class SubScheduleResponseDto {
     private LocalTime startDate;
     private LocalTime endDate;
     private Places places;
-    private MainSchedule mainSchedule;
 
     public SubScheduleResponseDto(SubSchedule subSchedule) {
         this.date = subSchedule.getDate();
         this.startDate = subSchedule.getStartTime();
         this.endDate = subSchedule.getEndTime();
         this.places = subSchedule.getPlaces();
-        this.mainSchedule = subSchedule.getMainSchedule();
     }
 }
