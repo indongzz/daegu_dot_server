@@ -32,4 +32,7 @@ dependencies {
 
     // Spring Actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // MariaDB
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 }
