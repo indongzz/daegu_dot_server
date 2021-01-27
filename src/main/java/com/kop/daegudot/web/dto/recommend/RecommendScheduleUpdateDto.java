@@ -12,13 +12,13 @@ import java.util.ArrayList;
 public class RecommendScheduleUpdateDto {
     private String title;
     private String content;
-    private MainSchedule mainSchedule;
-    private ArrayList<Hashtag> hashtags;
+    private long mainScheduleId;
+    private ArrayList<Long> hashtagId;
 
-    public RecommendScheduleUpdateDto(String title, String content, MainSchedule mainSchedule, ArrayList<Hashtag> hastags){
+    public RecommendScheduleUpdateDto(String title, String content, long mainScheduleId, ArrayList<Long> hastagId){
         this.title = title;
         this.content = content;
-        this.mainSchedule = mainSchedule;
-        this.hashtags = hastags;
+        this.mainScheduleId = mainScheduleId;
+        this.hashtagId = hastagId;
     }
 }

@@ -6,18 +6,19 @@ import com.kop.daegudot.domain.recommendschedule.RecommendSchedule;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class RecommendScheduleResponseDto {
     private MainSchedule mainSchedule;
     private String title;
     private String content;
-    private ArrayList<Hashtag> hashtags;
+    private List<Hashtag> hashtags;
 
     public RecommendScheduleResponseDto(RecommendSchedule recommendSchedule){
         this.mainSchedule = recommendSchedule.getMainSchedule();
         this.title = recommendSchedule.getTitle();
         this.content = recommendSchedule.getContent();
-        this.hashtags = (ArrayList<Hashtag>) recommendSchedule.getHashtags();
+        this.hashtags = recommendSchedule.getHashtags();
     }
 }

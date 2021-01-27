@@ -13,17 +13,17 @@ import java.util.ArrayList;
 public class RecommendScheduleRegisterDto {
     private String title;
     private String content;
-    private MainSchedule mainSchedule;
-    private ArrayList<Hashtag> hashtags;
+    private long mainScheduleId;
+    private ArrayList<Long> hashtagId;
 
-    public RecommendScheduleRegisterDto(String title, String content, MainSchedule mainSchedule, ArrayList<Hashtag> hashtags){
+    public RecommendScheduleRegisterDto(String title, String content, long mainScheduleId, ArrayList<Long> hashtagsId){
         this.title = title;
         this.content = content;
-        this.mainSchedule = mainSchedule;
-        this.hashtags = hashtags;
+        this.mainScheduleId = mainScheduleId;
+        this.hashtagId = hashtagsId;
     }
 
-    public RecommendSchedule toEntity(){
+    public RecommendSchedule toEntity(MainSchedule mainSchedule, ArrayList<Hashtag> hashtags){
         return RecommendSchedule.builder().mainSchedule(mainSchedule).title(title).content(content)
                 .hashtags(hashtags).build();
     }

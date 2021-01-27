@@ -30,9 +30,9 @@ public class RecommendSchedule {
     @Column(columnDefinition = "TEXT", length = 2048)
     private String content;
 
-    @OneToMany
+    @ManyToMany
     @JoinColumn(name = "hashtag_id")
-    private List<Hashtag> hashtags = new ArrayList<>();
+    private List<Hashtag> hashtags;
 
     @Builder
     public RecommendSchedule(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags){

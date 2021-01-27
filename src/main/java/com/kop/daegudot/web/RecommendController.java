@@ -16,13 +16,13 @@ public class RecommendController {
     private final RecommendService mRecommendService;
 
     //메인일정을 추천하기 - 추천할 때 해시태그 값도 필요
-    @PostMapping("/recommand/register")
+    @PostMapping("/recommend/register")
     public Long saveRecommendSchedule(@RequestBody RecommendScheduleRegisterDto recommendScheduleRegisterDto){
         return mRecommendService.saveRecommendSchedule(recommendScheduleRegisterDto);
     }
 
     //추천된 일정 나열하기
-    @PostMapping("/recommend")
+    @GetMapping("/recommend")
     public ArrayList<RecommendScheduleResponseDto> listRecommendSchedule(){
         return mRecommendService.findAllRecommendSchedule();
     }
