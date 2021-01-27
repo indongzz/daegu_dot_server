@@ -28,7 +28,7 @@ public class Posts extends BaseTimeEntity {
 
     private String author;
 
-    @Builder // Builder method
+    @Builder // 변수 하나하나마다 직접 값을 설정해야 함
     public Posts(String title, String content, String author) {
         this.title = title;
         this.content = content;
