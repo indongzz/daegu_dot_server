@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -52,7 +54,9 @@ public class CommentService {
     public Long updateComment(long id, CommentUpdateDto commentUpdateDto){
         Comment comment = mCommentRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("There is no id =" + id));
-        comment.update(commentUpdateDto.getDateTime(), comment.getComments(), comment.getStar());
+        comment.update(LocalDateTime.parse(commentUpdateDto.getDateTime(), DateTimeFormatter.ISO_DATE_TIME),
+                comment.getComments(), comment.getStar());
+        mCommentRepository.save(comment);
         return id;
     }
 

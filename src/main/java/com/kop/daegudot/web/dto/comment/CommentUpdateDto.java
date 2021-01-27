@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CommentUpdateDto {
     private String comments;
-    private LocalDateTime dateTime;
+    private String dateTime;
     private int star;
 
-    public CommentUpdateDto(LocalDateTime dateTime, String comments, int star){
+    public CommentUpdateDto(String dateTime, String comments, int star){
         this.dateTime = dateTime;
         this.comments = comments;
         this.star = star;

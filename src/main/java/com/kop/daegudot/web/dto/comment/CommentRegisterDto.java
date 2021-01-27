@@ -6,18 +6,21 @@ import com.kop.daegudot.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @NoArgsConstructor
 public class CommentRegisterDto {
-    private LocalDateTime dateTime;
+    private String dateTime;
     private String comments;
     private int star;
     private long userId;
     private long recommendScheduleId;
 
-    public CommentRegisterDto(LocalDateTime dateTime, String comments, int star, long userId,
+    public CommentRegisterDto(String dateTime, String comments, int star, long userId,
                               long recommendScheduleId){
         this.dateTime = dateTime;
         this.comments = comments;
@@ -28,6 +31,6 @@ public class CommentRegisterDto {
 
     public Comment toEntity(User user, RecommendSchedule recommendSchedule){
         return Comment.builder().comments(comments).user(user).star(star)
-                .dateTime(dateTime).recommendSchedule(recommendSchedule).build();
+                .dateTime(LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_DATE_TIME)).recommendSchedule(recommendSchedule).build();
     }
 }
