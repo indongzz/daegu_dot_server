@@ -6,8 +6,11 @@ import com.kop.daegudot.web.dto.mainshcedule.MainScheduleRegisterDto;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleResponseDto;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleUpdateDto;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @RestController
@@ -29,14 +32,14 @@ public class MainScheduleController {
 
     /* Delete MainSchedule
     if MainSchedule is deleted, all of the SubSchedule that is related MainSchedule is, too.*/
-    @GetMapping("/schedule/main/delete/{mainscheduleId}")
-    public void deleteById(@PathVariable long mainscheduleId) {
-        mMainScheduleService.deleteById(mainscheduleId);
+    @DeleteMapping("/schedule/main/delete/{mainscheduleId}")
+    public Long deleteById(@PathVariable long mainscheduleId) {
+        return mMainScheduleService.deleteById(mainscheduleId);
     }
 
     //Update MainSchedule
-    @PutMapping("/schedule/main/update/{mainscheduleId}")
-    public Long updateById(@PathVariable long mainscheduleId, MainScheduleUpdateDto mainScheduleUpdateDto) {
+    @PutMapping(value = "/schedule/main/update/{mainscheduleId}")
+    public Long updateById(@PathVariable long mainscheduleId, @RequestBody MainScheduleUpdateDto mainScheduleUpdateDto) {
         return mMainScheduleService.updateById(mainscheduleId, mainScheduleUpdateDto);
     }
 }

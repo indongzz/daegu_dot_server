@@ -9,27 +9,30 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @NoArgsConstructor
 @Getter
 public class SubScheduleRegisterDto {
-    private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private Places places;
-    private MainSchedule mainSchedule;
+    private String date;
+    private String startTime;
+    private String endTime;
+    private long placesId;
+    private long mainScheduleId;
 
-    public SubScheduleRegisterDto(LocalDate date, LocalTime startTime, LocalTime endTime,
-                                  Places places, MainSchedule mainSchedule) {
+    public SubScheduleRegisterDto(String date, String startTime, String endTime,
+                                  long placesId, long mainScheduleId) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.places = places;
-        this.mainSchedule = mainSchedule;
+        this.placesId = placesId;
+        this.mainScheduleId = mainScheduleId;
     }
 
-    public SubSchedule toEntity() {
-        return SubSchedule.builder().date(date).startTime(startTime).endTime(endTime).
-                places(places).mainSchedule(mainSchedule).build();
+    public SubSchedule toEntity(Places places, MainSchedule mainSchedule) {
+        return SubSchedule.builder().date(LocalDate.parse(date, DateTimeFormatter.ISO_DATE))
+                .startTime(LocalTime.parse(startTime,DateTimeFormatter.ISO_LOCAL_TIME))
+                .endTime(LocalTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_TIME))
+                .places(places).mainSchedule(mainSchedule).build();
     }
 }

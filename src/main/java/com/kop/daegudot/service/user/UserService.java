@@ -5,6 +5,7 @@ import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.dto.user.UserLoginDto;
 import com.kop.daegudot.web.dto.user.UserResponseDto;
 import com.kop.daegudot.web.dto.user.UserRegisterDto;
+import com.kop.daegudot.web.dto.user.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,15 @@ public class UserService {
     public UserResponseDto findByNickname(String nickname) {
         User userEntity = mUserRepository.findByNickname(nickname);
         return new UserResponseDto(userEntity);
+    }
+
+    // UPDATE
+    public Long updateById(long userId, UserUpdateDto userUpdateDto){
+        User user = mUserRepository.findById(userId)
+                .orElseThrow(()->new IllegalArgumentException("There is no places id = " + userId));
+        user.update(userUpdateDto.getNickname(), userUpdateDto.getPassword());
+        mUserRepository.save(user);
+        return userId;
     }
 
     // SELECT * FROM USER WHERE email = ? AND password = ?

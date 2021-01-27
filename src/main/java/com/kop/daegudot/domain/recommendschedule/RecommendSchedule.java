@@ -1,9 +1,11 @@
 package com.kop.daegudot.domain.recommendschedule;
 
 import com.kop.daegudot.domain.hashtag.Hashtag;
+import com.kop.daegudot.domain.comment.Comment;
 import com.kop.daegudot.domain.mainschedule.MainSchedule;
 
 import javax.persistence.*;
+
 
 import lombok.Builder;
 import lombok.Getter;
@@ -25,14 +27,18 @@ public class RecommendSchedule {
     @JoinColumn(name = "main_schedule_id")
     private MainSchedule mainSchedule;
 
+    @OneToMany(mappedBy = "recommendSchedule", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "comment_id")
+    private List<Comment> commentList = new ArrayList<>();
+
     private String title;
 
     @Column(columnDefinition = "TEXT", length = 2048)
     private String content;
 
-    @OneToMany
+    @ManyToMany
     @JoinColumn(name = "hashtag_id")
-    private List<Hashtag> hashtags = new ArrayList<>();
+    private List<Hashtag> hashtags;
 
     @Builder
     public RecommendSchedule(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags){

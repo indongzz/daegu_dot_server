@@ -4,6 +4,7 @@ import com.kop.daegudot.service.user.UserService;
 import com.kop.daegudot.web.dto.user.UserLoginDto;
 import com.kop.daegudot.web.dto.user.UserResponseDto;
 import com.kop.daegudot.web.dto.user.UserRegisterDto;
+import com.kop.daegudot.web.dto.user.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,8 +32,14 @@ public class UserController {
         return mUserService.findByNickname(nickname);
     }
 
+    //TODO:닉네임 변경 및 비밀번호 변경 기능 추가
+    @PutMapping("/user/update/{userId}")
+    public Long updateById(@PathVariable long userId, @RequestBody UserUpdateDto userUpdateDto){
+        return mUserService.updateById(userId, userUpdateDto);
+    }
+
     //Login
-    @PostMapping("user/login")
+    @PostMapping("/user/login")
     public UserResponseDto findByEmailANDPassword(@RequestBody UserLoginDto userLoginDto) {
         return mUserService.findByEmailAndPassword(userLoginDto);
     }

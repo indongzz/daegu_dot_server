@@ -29,14 +29,14 @@ public class SubScheduleController {
     }
 
     //Delete SubSchedule
-    @GetMapping("/schedule/sub/delete/{subscheduleId}")
+    @DeleteMapping("/schedule/sub/delete/{subscheduleId}")
     public void deleteById(@PathVariable long subscheduleId) {
         mSubScheduleService.deleteById(subscheduleId);
     }
 
     //Update SubSchedule
     @PutMapping("/schedule/sub/update/{subscheduleId}")
-    public Long updateById(@PathVariable long subscheduleId, SubScheduleUpdateDto subScheduleUpdateDto) {
+    public Long updateById(@PathVariable long subscheduleId, @RequestBody SubScheduleUpdateDto subScheduleUpdateDto) {
         return mSubScheduleService.updateById(subscheduleId, subScheduleUpdateDto);
     }
 }

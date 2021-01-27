@@ -10,15 +10,15 @@ import java.time.LocalTime;
 @Getter
 @NoArgsConstructor
 public class SubScheduleUpdateDto {
-    private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private Places places;
+    private String date;
+    private String startTime;
+    private String endTime;
+    private long placesId;
 
-    public SubScheduleUpdateDto(LocalDate date, LocalTime startTime, LocalTime endTime, Places places) {
+    public SubScheduleUpdateDto(String date, String startTime, String endTime, long placesId) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.places = places;
+        this.placesId = placesId;
     }
 }
