@@ -28,7 +28,6 @@ public class RecommendSchedule {
     private MainSchedule mainSchedule;
 
     @OneToMany(mappedBy = "recommendSchedule", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_id")
     private List<Comment> commentList = new ArrayList<>();
 
     private String title;
