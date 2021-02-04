@@ -20,7 +20,7 @@ public class UserController {
 
     //Register
     @PostMapping("/user/register")
-    public Long save(@RequestBody UserRegisterDto userSaveRequestDto) {
+    public ResponseEntity<TokenResponseDto> save(@RequestBody UserRegisterDto userSaveRequestDto) {
         return mUserService.save(userSaveRequestDto);
     }
 
@@ -36,23 +36,17 @@ public class UserController {
         return mUserService.findByNickname(nickname);
     }
 
-    //Login
-    @PostMapping("user/login2")
-    public UserResponseDto findByEmailANDPassword(@RequestBody UserLoginDto userLoginDto) {
+    //Login test용 -> postmapping으로 변경 필요
+    @PostMapping("/user/login")
+    public UserResponseDto login(@RequestBody UserLoginDto userLoginDto){
         return mUserService.findByEmailAndPassword(userLoginDto);
     }
 
-    //Login test용 -> postmapping으로 변경 필요
-    @GetMapping("user/login/test/{email}/{password}")
-    public ResponseEntity<TokenResponseDto> login(@PathVariable String email, @PathVariable String password){
-        String token = mUserService.createToken(email, password);
-        return ResponseEntity.ok().body(new TokenResponseDto(token, "bearer"));
-    }
-
-    @GetMapping("user/login")
+    //헤더 테스트
+    @GetMapping("/user/info")
     public ResponseEntity<UserResponseDto> getUserFromToken(HttpServletRequest request){
         String email = (String) request.getAttribute("email");
-        System.out.println("email ::: " + email);
+        System.out.println(email);
         UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
         return ResponseEntity.ok().body(userResponseDto);
     }

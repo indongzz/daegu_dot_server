@@ -11,6 +11,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //Spring Security에서 기본으로 제공되는 login form을 없애기 위한 클래스
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.httpBasic().disable();
+        httpSecurity.httpBasic().disable()
+                .csrf().disable();
     }
 }

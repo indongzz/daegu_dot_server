@@ -1,5 +1,7 @@
 package com.kop.daegudot.web.JWT;
 
+import com.kop.daegudot.domain.user.User;
+import com.kop.daegudot.domain.user.UserRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class BearerAuthInterceptor implements HandlerInterceptor {
     private AuthorizationExtractor authorizationExtractor;
     private JwtTokenProvider jwtTokenProvider;
+    private UserRepository userRepository;
 
     public BearerAuthInterceptor(AuthorizationExtractor authorizationExtractor,
                                  JwtTokenProvider jwtTokenProvider){
