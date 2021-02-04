@@ -11,14 +11,10 @@ import java.time.LocalTime;
 @Getter
 public class SubScheduleResponseDto {
     private LocalDate date;
-    private LocalTime startDate;
-    private LocalTime endDate;
     private Places places;
 
     public SubScheduleResponseDto(SubSchedule subSchedule) {
         this.date = subSchedule.getDate();
-        this.startDate = subSchedule.getStartTime();
-        this.endDate = subSchedule.getEndTime();
         this.places = subSchedule.getPlaces();
     }
 }
