@@ -19,19 +19,20 @@ public class UserController {
     private final UserService mUserService;
 
     //Register
+    //TODO: 회원가입 -> 디비 저장, 로그인 -> 토큰 주기
     @PostMapping("/user/register")
     public ResponseEntity<TokenResponseDto> save(@RequestBody UserRegisterDto userSaveRequestDto) {
         return mUserService.save(userSaveRequestDto);
     }
 
     //Duplicate Check - Email
-    @GetMapping("/user/register/{email}")
+    @GetMapping("/user/register/email/{email}")
     public UserResponseDto findByEmail(@PathVariable String email) {
         return mUserService.findByEmail(email);
     }
 
     //Duplicate Check - nickname
-    @GetMapping("/user/register/{nickname}")
+    @GetMapping("/user/register/nickname/{nickname}")
     public UserResponseDto findByNickname(@PathVariable String nickname) {
         return mUserService.findByNickname(nickname);
     }

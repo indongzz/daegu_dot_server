@@ -43,6 +43,7 @@ public class UserService {
 
     // SELECT * FROM USER WHERE nickname = ?
     public UserResponseDto findByNickname(String nickname) {
+        System.out.println(nickname);
         User user = mUserRepository.findByNickname(nickname);
         return new UserResponseDto(user);
     }
