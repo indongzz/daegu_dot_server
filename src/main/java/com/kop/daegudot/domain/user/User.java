@@ -35,4 +35,9 @@ public class User {
         this.token = token;
         this.type = type;
     }
+
+    public void update(String nickname, String password){
+        this.nickname = nickname;
+        this.password = password;
+    }
 }

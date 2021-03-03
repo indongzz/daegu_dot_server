@@ -9,6 +9,7 @@ import com.kop.daegudot.web.dto.TokenResponseDto;
 import com.kop.daegudot.web.dto.user.UserLoginDto;
 import com.kop.daegudot.web.dto.user.UserResponseDto;
 import com.kop.daegudot.web.dto.user.UserRegisterDto;
+import com.kop.daegudot.web.dto.user.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,15 @@ public class UserService {
         System.out.println(nickname);
         User user = mUserRepository.findByNickname(nickname);
         return new UserResponseDto(user);
+    }
+
+    // UPDATE
+    public Long updateById(long userId, UserUpdateDto userUpdateDto){
+        User user = mUserRepository.findById(userId)
+                .orElseThrow(()->new IllegalArgumentException("There is no places id = " + userId));
+        user.update(userUpdateDto.getNickname(), userUpdateDto.getPassword());
+        mUserRepository.save(user);
+        return userId;
     }
 
     // SELECT * FROM USER WHERE email = ? AND password = ?
