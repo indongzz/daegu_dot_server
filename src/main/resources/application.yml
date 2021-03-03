@@ -1,6 +1,5 @@
 # Connect to MySQL
 server:
-  address: localhost
   port: 8080
 
 # MySQL setting

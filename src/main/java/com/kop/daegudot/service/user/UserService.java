@@ -3,20 +3,15 @@ package com.kop.daegudot.service.user;
 import com.kop.daegudot.domain.user.User;
 import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.JWT.JwtTokenProvider;
-import com.kop.daegudot.web.JWT.JwtUtil;
-import com.kop.daegudot.web.JWT.JwtUtilImpl;
 import com.kop.daegudot.web.dto.TokenResponseDto;
 import com.kop.daegudot.web.dto.user.UserLoginDto;
 import com.kop.daegudot.web.dto.user.UserResponseDto;
 import com.kop.daegudot.web.dto.user.UserRegisterDto;
 import com.kop.daegudot.web.dto.user.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.validation.constraints.Null;
 
 
 @RequiredArgsConstructor
@@ -24,15 +19,13 @@ import javax.validation.constraints.Null;
 public class UserService {
     private final UserRepository mUserRepository;
     private final JwtTokenProvider mJwtTokenProvider;
-    //private JwtUtilImpl jwtUtil = new JwtUtilImpl();
 
     // INSERT
     @Transactional
     public ResponseEntity<TokenResponseDto> save(UserRegisterDto userSaveRequestDto) {
         String token = mJwtTokenProvider.createToken(userSaveRequestDto.getEmail());
         mUserRepository.save(userSaveRequestDto.toEntity(token));
-        //String token = jwtUtil.createToken();
-        //mUserRepository.save(userSaveRequestDto.toEntity(token));
+
         return ResponseEntity.ok().body(new TokenResponseDto(token, "bearer"));
     }
 

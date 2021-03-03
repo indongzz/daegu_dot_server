@@ -1,5 +1,7 @@
 package com.kop.daegudot.web.JWT;
 
+import com.kop.daegudot.domain.user.User;
+import com.kop.daegudot.web.dto.user.UserRegisterDto;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -18,7 +20,8 @@ public class JwtTokenProvider {
 
     //JWT 만들기
     public String createToken(String subject){
-        Claims claims = Jwts.claims().setSubject(subject);
+        Claims claims = Jwts.claims()
+                .setSubject(subject);
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -41,7 +44,7 @@ public class JwtTokenProvider {
         try{
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             if(claimsJws.getBody().getExpiration().before(new Date())) return false;
-            else return true;
+            return true;
         } catch (JwtException | IllegalArgumentException e){
             return false;
         }
