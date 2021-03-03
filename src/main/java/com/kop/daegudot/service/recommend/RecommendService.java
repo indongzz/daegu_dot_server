@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class RecommendService {
     //INSERT TO
     @Transactional
     public long saveRecommendSchedule(RecommendScheduleRegisterDto recommendScheduleRegisterDto){
+        LocalDateTime localDateTime = LocalDateTime.now();
         MainSchedule mainSchedule = mMainscheduleRepository.findById(recommendScheduleRegisterDto.getMainScheduleId())
                 .orElseThrow(()->new IllegalArgumentException("There is no id = "+recommendScheduleRegisterDto.getMainScheduleId()));
 
@@ -39,7 +41,7 @@ public class RecommendService {
         }
 
 
-        return mRecommendScheduleRepository.save(recommendScheduleRegisterDto.toEntity(mainSchedule, hashtagArrayList)).getId();
+        return mRecommendScheduleRepository.save(recommendScheduleRegisterDto.toEntity(mainSchedule, hashtagArrayList, localDateTime)).getId();
     }
 
     //SELECT * FROM RecommendSchedule
@@ -57,6 +59,7 @@ public class RecommendService {
 
     //UPDATE
     public Long updateRecommendSchedule(long recommendScheduleId, RecommendScheduleUpdateDto recommendScheduleUpdateDto){
+        LocalDateTime localDateTime = LocalDateTime.now();
         RecommendSchedule recommendSchedule = mRecommendScheduleRepository.findById(recommendScheduleId)
                 .orElseThrow(()->new IllegalArgumentException("There is no id = "+recommendScheduleId));
         MainSchedule mainSchedule = mMainscheduleRepository.findById(recommendScheduleUpdateDto.getMainScheduleId())
@@ -71,7 +74,7 @@ public class RecommendService {
         }
 
         recommendSchedule.update(mainSchedule, recommendScheduleUpdateDto.getTitle(),
-                recommendScheduleUpdateDto.getContent(), hashtagArrayList);
+                recommendScheduleUpdateDto.getContent(), hashtagArrayList, localDateTime);
         mRecommendScheduleRepository.save(recommendSchedule);
         return recommendScheduleId;
     }

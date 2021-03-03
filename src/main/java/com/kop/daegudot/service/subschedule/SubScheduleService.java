@@ -64,8 +64,6 @@ public class SubScheduleService {
         Places places = mPlacesRepository.findById(subScheduleUpdateDto.getPlacesId())
                 .orElseThrow(()->new IllegalArgumentException("There is no places id = " + subScheduleUpdateDto.getPlacesId()));
         subSchedule.update(LocalDate.parse(subScheduleUpdateDto.getDate(), DateTimeFormatter.ISO_DATE)
-                , LocalTime.parse(subScheduleUpdateDto.getStartTime(), DateTimeFormatter.ISO_LOCAL_TIME)
-                , LocalTime.parse(subScheduleUpdateDto.getEndTime(), DateTimeFormatter.ISO_LOCAL_TIME)
                 , places);
         mSubScheduleRepository.save(subSchedule);
         return subscheduleId;

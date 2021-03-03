@@ -21,8 +21,6 @@ public class SubSchedule {
     private long id;
 
     private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
 
     @OneToOne
     @JoinColumn(name="places_id")
@@ -33,20 +31,14 @@ public class SubSchedule {
     private MainSchedule mainSchedule;
 
     @Builder
-    public SubSchedule(LocalDate date, LocalTime startTime, LocalTime endTime,
-                       Places places, MainSchedule mainSchedule) {
+    public SubSchedule(LocalDate date, Places places, MainSchedule mainSchedule) {
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.places = places;
         this.mainSchedule = mainSchedule;
     }
 
-    public void update(LocalDate date, LocalTime startTime, LocalTime endTime,
-                       Places places) {
+    public void update(LocalDate date, Places places) {
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.places = places;
     }
 }

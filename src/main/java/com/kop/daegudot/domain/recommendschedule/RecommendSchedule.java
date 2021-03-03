@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class RecommendSchedule {
 
     private String title;
 
+    private LocalDateTime datetime;
+
     @Column(columnDefinition = "TEXT", length = 2048)
     private String content;
 
@@ -40,17 +43,19 @@ public class RecommendSchedule {
     private List<Hashtag> hashtags;
 
     @Builder
-    public RecommendSchedule(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags){
+    public RecommendSchedule(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags, LocalDateTime datetime){
         this.mainSchedule = mainSchedule;
         this.title = title;
         this.content = content;
         this.hashtags = hashtags;
+        this.datetime = datetime;
     }
 
-    public void update(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags){
+    public void update(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags, LocalDateTime datetime){
         this.mainSchedule = mainSchedule;
         this.title = title;
         this.content = content;
         this.hashtags = hashtags;
+        this.datetime = datetime;
     }
 }
