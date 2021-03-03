@@ -6,6 +6,7 @@ import com.kop.daegudot.domain.recommendschedule.RecommendSchedule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @NoArgsConstructor
@@ -23,8 +24,7 @@ public class RecommendScheduleRegisterDto {
         this.hashtagId = hashtagsId;
     }
 
-    public RecommendSchedule toEntity(MainSchedule mainSchedule, ArrayList<Hashtag> hashtags){
-        return RecommendSchedule.builder().mainSchedule(mainSchedule).title(title).content(content)
-                .hashtags(hashtags).build();
+    public RecommendSchedule toEntity(MainSchedule mainSchedule, ArrayList<Hashtag> hashtags, LocalDateTime datetime){
+        return RecommendSchedule.builder().mainSchedule(mainSchedule).title(title).content(content).hashtags(hashtags).datetime(datetime).build();
     }
 }

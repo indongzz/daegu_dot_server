@@ -43,19 +43,20 @@ public class CommentService {
     //Insert
     @Transactional
     public Long saveComment(CommentRegisterDto commentRegisterDto){
+        LocalDateTime localDateTime = LocalDateTime.now();
         User user = mUserRepository.findById(commentRegisterDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("There is no id =" + commentRegisterDto.getUserId()));
         RecommendSchedule recommendSchedule = mRecommendScheduleRepository.findById(commentRegisterDto.getRecommendScheduleId())
                 .orElseThrow(() -> new IllegalArgumentException("There is no id =" + commentRegisterDto.getRecommendScheduleId()));
-        return mCommentRepository.save(commentRegisterDto.toEntity(user, recommendSchedule)).getId();
+        return mCommentRepository.save(commentRegisterDto.toEntity(user, recommendSchedule, localDateTime)).getId();
     }
 
     //Update
     public Long updateComment(long id, CommentUpdateDto commentUpdateDto){
+        LocalDateTime localDateTime = LocalDateTime.now();
         Comment comment = mCommentRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("There is no id =" + id));
-        comment.update(LocalDateTime.parse(commentUpdateDto.getDateTime(), DateTimeFormatter.ISO_DATE_TIME),
-                comment.getComments(), comment.getStar());
+        comment.update(localDateTime, comment.getComments(), comment.getStar());
         mCommentRepository.save(comment);
         return id;
     }
