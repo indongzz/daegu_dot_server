@@ -21,7 +21,8 @@ public class UserRegisterDto {
         this.type = type;
     }
 
-    public User toEntity() {
-        return User.builder().email(email).nickname(nickname).password(password).type(type).build();
+    public User toEntity(String token) {
+        return User.builder().email(email).nickname(nickname).password(password)
+                .token(token).type(type).build();
     }
 }

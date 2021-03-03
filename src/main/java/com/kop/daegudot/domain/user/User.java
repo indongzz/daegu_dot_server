@@ -19,18 +19,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private String email;
     @Column(length = 512)
     private String password;
-
-    private String email;
     private String nickname;
     private char type; //G: google, K: kakao, N: normal
 
+    private String token;
+
     @Builder
-    public User (String email, String nickname, String password, char type) {
+    public User (String email, String nickname, String password, String token, char type) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
+        this.token = token;
         this.type = type;
     }
 
