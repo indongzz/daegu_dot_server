@@ -47,7 +47,7 @@ else
 fi
 
 echo "> $IDLE_PROFILE 배포"
-nohup java -jar -Dspring.config.location=/var/lib/jenkins/workspace/daegudot_property_files/application.yml -Dspring.profiles.active=$IDLE_PROFILE $IDLE_APPLICATION_PATH &
+nohup java -jar -Dspring.config.location=/var/lib/jenkins/workspace/daegudot_property_files/application.yml -Dspring.profiles.active=$IDLE_PROFILE $IDLE_APPLICATION_PATH > /tmp/daegudot.log 2>&1 &
 
 echo "> $IDLE_PROFILE 10초 후 Health check 시작"
 echo "> curl -s http://localhost:$IDLE_PORT/actuator/health"
