@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 public class BearerAuthInterceptor implements HandlerInterceptor {
     private AuthorizationExtractor authorizationExtractor;
     private JwtTokenProvider jwtTokenProvider;
-    private UserRepository userRepository;
 
     public BearerAuthInterceptor(AuthorizationExtractor authorizationExtractor,
                                  JwtTokenProvider jwtTokenProvider){
@@ -29,15 +28,15 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = authorizationExtractor.extract(request, "Bearer");
-        if(!StringUtils.isEmpty(token)){
+        if(StringUtils.isEmpty(token)){
             return true;
         }
         if(!jwtTokenProvider.validateToken(token)){
             throw new IllegalArgumentException("유효하지 않은 토큰");
         }
 
-        String email = jwtTokenProvider.getSubeject(token);
-        request.setAttribute("email", email);
+        String subject = jwtTokenProvider.getSubeject(token);
+        request.setAttribute("email", subject);
         return true;
     }
 }
