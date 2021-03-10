@@ -4,6 +4,7 @@ package com.kop.daegudot.service.places;
 import com.kop.daegudot.domain.places.Places;
 import com.kop.daegudot.domain.places.PlacesRepository;
 import com.kop.daegudot.web.dto.PlacesDto;
+import com.kop.daegudot.web.dto.PlacesLocationDto;
 import com.kop.daegudot.web.dto.PlacesResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,25 @@ public class PlacesService {
             placesResponseDtoArrayList.add(placesResponseDto);
         }
         return placesResponseDtoArrayList;
+    }
+
+    @Transactional
+    public long updateLocation(ArrayList<PlacesLocationDto> placesLocationDtoArrayList){
+        long id;
+        float longitude;
+        float latitude;
+        for(int i=0; i<placesLocationDtoArrayList.size();i++){
+            id = placesLocationDtoArrayList.get(i).getId();
+            longitude = placesLocationDtoArrayList.get(i).getLongitude();
+            latitude = placesLocationDtoArrayList.get(i).getLatitude();
+
+            Places places = mPlacesRepository.findById(id)
+                    .orElseThrow(()->new IllegalArgumentException("There is no places id"));
+
+            places.update(longitude, latitude);
+            mPlacesRepository.save(places);
+        }
+
+        return 1;
     }
 }

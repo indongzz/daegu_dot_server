@@ -27,6 +27,10 @@ public class Places {
     private String homepage;
     @Column
     private String telephone;
+    @Column
+    private float longitude; //경도
+    @Column
+    private float latitude; //위도
 
 
 
@@ -40,4 +44,8 @@ public class Places {
         this.telephone = telephone;
     }
 
+    public void update(float longitude, float latitude){
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
 }

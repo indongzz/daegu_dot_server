@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PlacesResponseDto {
+    private long id;
     private String address;
     private String attractContents;
     private String attractName;
@@ -14,6 +15,7 @@ public class PlacesResponseDto {
     private String telephone;
 
     public PlacesResponseDto(Places places){
+        this.id = places.getId();
         this.address = places.getAddress();
         this.attractContents = places.getAttractContents();
         this.attractName = places.getAttractName();

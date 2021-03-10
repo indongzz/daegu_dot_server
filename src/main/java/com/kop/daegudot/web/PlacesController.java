@@ -3,10 +3,10 @@ package com.kop.daegudot.web;
 
 import com.kop.daegudot.service.places.PlacesService;
 import com.kop.daegudot.web.dto.PlacesDto;
+import com.kop.daegudot.web.dto.PlacesLocationDto;
 import com.kop.daegudot.web.dto.PlacesResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -27,6 +27,12 @@ public class PlacesController {
     @GetMapping("/places/list")
     public ArrayList<PlacesResponseDto> findAll(){
         return mPlacesService.findAll();
+    }
+
+    //좌표 추가
+    @PutMapping("/places/location")
+    public long saveLocation(@RequestBody ArrayList<PlacesLocationDto> placesLocationDtoArrayList){
+        return mPlacesService.updateLocation(placesLocationDtoArrayList);
     }
 
 }
