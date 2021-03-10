@@ -27,8 +27,9 @@ public class Places {
     private String homepage;
     @Column
     private String telephone;
-
+    @Column
     private float longitude; //경도
+    @Column
     private float latitude; //위도
 
 
