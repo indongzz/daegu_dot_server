@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PlacesResponseDto {
     private long id;
+    private Float longitude;
+    private Float latitude;
     private String address;
     private String attractContents;
     private String attractName;
@@ -16,6 +18,8 @@ public class PlacesResponseDto {
 
     public PlacesResponseDto(Places places){
         this.id = places.getId();
+        this.longitude = places.getLongitude();
+        this.latitude = places.getLatitude();
         this.address = places.getAddress();
         this.attractContents = places.getAttractContents();
         this.attractName = places.getAttractName();

@@ -28,9 +28,9 @@ public class Places {
     @Column
     private String telephone;
     @Column
-    private float longitude; //경도
+    private Float longitude; //경도
     @Column
-    private float latitude; //위도
+    private Float latitude; //위도
 
 
 
