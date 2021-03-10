@@ -38,13 +38,10 @@ public class PlacesService {
 
     @Transactional
     public long updateLocation(ArrayList<PlacesLocationDto> placesLocationDtoArrayList){
-        long id;
-        float longitude;
-        float latitude;
         for(int i=0; i<placesLocationDtoArrayList.size();i++){
-            id = placesLocationDtoArrayList.get(i).getId();
-            longitude = placesLocationDtoArrayList.get(i).getLongitude();
-            latitude = placesLocationDtoArrayList.get(i).getLatitude();
+            long id = placesLocationDtoArrayList.get(i).getId();
+            String longitude = placesLocationDtoArrayList.get(i).getLongitude();
+            String latitude = placesLocationDtoArrayList.get(i).getLatitude();
 
             Places places = mPlacesRepository.findById(id)
                     .orElseThrow(()->new IllegalArgumentException("There is no places id"));
