@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PlacesLocationDto {
     private long id;
-    private Float longitude; //경도
-    private Float latitude; //위도
+    private String longitude; //경도
+    private String latitude; //위도
 
     @Builder
-    public PlacesLocationDto(long id, Float longitude, Float latitude){
+    public PlacesLocationDto(long id, String longitude, String latitude){
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;

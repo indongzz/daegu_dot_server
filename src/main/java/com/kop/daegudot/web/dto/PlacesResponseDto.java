@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PlacesResponseDto {
     private long id;
-    private Float longitude;
-    private Float latitude;
+    private String longitude;
+    private String latitude;
     private String address;
     private String attractContents;
     private String attractName;
