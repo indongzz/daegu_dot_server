@@ -28,6 +28,9 @@ public class Places {
     @Column
     private String telephone;
 
+    private float longitude; //경도
+    private float latitude; //위도
+
 
 
     @Builder
@@ -40,4 +43,8 @@ public class Places {
         this.telephone = telephone;
     }
 
+    public void update(float longitude, float latitude){
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
 }
