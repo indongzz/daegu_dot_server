@@ -10,10 +10,12 @@ import java.time.LocalTime;
 
 @Getter
 public class SubScheduleResponseDto {
+    private long id;
     private LocalDate date;
     private Places places;
 
     public SubScheduleResponseDto(SubSchedule subSchedule) {
+        this.id = subSchedule.getId();
         this.date = subSchedule.getDate();
         this.places = subSchedule.getPlaces();
     }
