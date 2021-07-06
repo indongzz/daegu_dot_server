@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class CommentResponseDto {
+    private long id;
     private LocalDateTime dateTime;
     private String comments;
     private int star;
@@ -16,6 +17,7 @@ public class CommentResponseDto {
     private RecommendSchedule recommendSchedule;
 
     public CommentResponseDto(Comment comment){
+        this.id = comment.getId();
         this.dateTime = comment.getDateTime();
         this.comments = comment.getComments();
         this.star = comment.getStar();
