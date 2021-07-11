@@ -25,7 +25,6 @@ public class MainScheduleRegisterDto {
 
     public MainSchedule toEntity(User user) {
         return MainSchedule.builder().startDate(LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE))
-                .endDate(LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE))
-                .title(title).user(user).build();
+                .endDate(LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE)).user(user).build();
     }
 }
