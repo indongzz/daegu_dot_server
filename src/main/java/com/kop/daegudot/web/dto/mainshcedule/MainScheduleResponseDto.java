@@ -7,13 +7,13 @@ import java.time.LocalDate;
 
 @Getter
 public class MainScheduleResponseDto {
+    private long id;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String title;
 
     public MainScheduleResponseDto(MainSchedule mainSchedule) {
+        this.id = mainSchedule.getId();
         this.startDate = mainSchedule.getStartDate();
         this.endDate = mainSchedule.getEndDate();
-        this.title = mainSchedule.getTitle();
     }
 }

@@ -4,10 +4,7 @@ import com.kop.daegudot.domain.user.User;
 import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.JWT.JwtTokenProvider;
 import com.kop.daegudot.web.dto.TokenResponseDto;
-import com.kop.daegudot.web.dto.user.UserLoginDto;
-import com.kop.daegudot.web.dto.user.UserResponseDto;
-import com.kop.daegudot.web.dto.user.UserRegisterDto;
-import com.kop.daegudot.web.dto.user.UserUpdateDto;
+import com.kop.daegudot.web.dto.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -42,11 +39,20 @@ public class UserService {
         return new UserResponseDto(user);
     }
 
-    // UPDATE
-    public Long updateById(long userId, UserUpdateDto userUpdateDto){
+    // UPDATE NICKNAME
+    public Long updateNicknameById(long userId, UserUpdateNicknameDto userUpdateNicknameDto){
         User user = mUserRepository.findById(userId)
                 .orElseThrow(()->new IllegalArgumentException("There is no places id = " + userId));
-        user.update(userUpdateDto.getNickname(), userUpdateDto.getPassword());
+        user.nicknameUpdate(userUpdateNicknameDto.getNickname());
+        mUserRepository.save(user);
+        return userId;
+    }
+
+    //UPDATE PASSWORD
+    public Long updatePasswordById(long userId, UserUpdatePasswordDto userUpdatePasswordDto){
+        User user = mUserRepository.findById(userId)
+                .orElseThrow(()->new IllegalArgumentException("There is no places id = " + userId));
+        user.passwordUpdate(userUpdatePasswordDto.getPassword());
         mUserRepository.save(user);
         return userId;
     }

@@ -3,10 +3,7 @@ package com.kop.daegudot.web;
 import com.kop.daegudot.domain.user.User;
 import com.kop.daegudot.service.user.UserService;
 import com.kop.daegudot.web.dto.TokenResponseDto;
-import com.kop.daegudot.web.dto.user.UserLoginDto;
-import com.kop.daegudot.web.dto.user.UserResponseDto;
-import com.kop.daegudot.web.dto.user.UserRegisterDto;
-import com.kop.daegudot.web.dto.user.UserUpdateDto;
+import com.kop.daegudot.web.dto.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,10 +35,22 @@ public class UserController {
         return mUserService.findByNickname(nickname);
     }
 
-    //TODO:닉네임 변경 및 비밀번호 변경 기능 추가
-    @PutMapping("/user/update/{userId}")
-    public Long updateById(@PathVariable long userId, @RequestBody UserUpdateDto userUpdateDto){
-        return mUserService.updateById(userId, userUpdateDto);
+    //토큰으로 닉네임 변경
+    @PutMapping("/user/update/nickname")
+    public ResponseEntity<Long> updateNickname(HttpServletRequest request, @RequestBody UserUpdateNicknameDto userUpdateNicknameDto){
+        String email = (String) request.getAttribute("email");
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        Long userId = mUserService.updateNicknameById(userResponseDto.getId(), userUpdateNicknameDto);
+        return ResponseEntity.ok().body(userId);
+    }
+
+    //토큰으로 비밀번호 변경
+    @PutMapping("/user/update/password")
+    public ResponseEntity<Long> updatePassword(HttpServletRequest request, @RequestBody UserUpdatePasswordDto userUpdatePasswordDto){
+        String email = (String) request.getAttribute("email");
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        Long userId = mUserService.updatePasswordById(userResponseDto.getId(), userUpdatePasswordDto);
+        return ResponseEntity.ok().body(userId);
     }
 
     //Login
@@ -57,4 +66,6 @@ public class UserController {
         UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
         return ResponseEntity.ok().body(userResponseDto);
     }
+
+
 }

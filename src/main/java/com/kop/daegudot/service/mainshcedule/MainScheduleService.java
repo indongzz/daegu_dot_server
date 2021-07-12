@@ -69,8 +69,7 @@ public class MainScheduleService {
         MainSchedule mainSchedule = mMainScheduleRepository.findById(mainScheduleId)
                 .orElseThrow(()->new IllegalArgumentException("There is no id = " + mainScheduleId));
         mainSchedule.update(LocalDate.parse(mainScheduleUpdateDto.getStartDate(), DateTimeFormatter.ISO_DATE),
-                LocalDate.parse(mainScheduleUpdateDto.getEndDate(), DateTimeFormatter.ISO_DATE),
-                mainScheduleUpdateDto.getTitle());
+                LocalDate.parse(mainScheduleUpdateDto.getEndDate(), DateTimeFormatter.ISO_DATE));
         mMainScheduleRepository.save(mainSchedule);
         return 1L;
     }

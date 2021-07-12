@@ -11,6 +11,7 @@ import java.util.List;
 
 @Getter
 public class RecommendScheduleResponseDto {
+    private long id;
     private MainSchedule mainSchedule;
     private String title;
     private String content;
@@ -18,6 +19,7 @@ public class RecommendScheduleResponseDto {
     private LocalDateTime localDateTime;
 
     public RecommendScheduleResponseDto(RecommendSchedule recommendSchedule){
+        this.id = recommendSchedule.getId();
         this.mainSchedule = recommendSchedule.getMainSchedule();
         this.title = recommendSchedule.getTitle();
         this.content = recommendSchedule.getContent();
