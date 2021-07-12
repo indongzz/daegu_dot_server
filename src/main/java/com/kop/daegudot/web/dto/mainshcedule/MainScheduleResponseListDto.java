@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 @Getter
 public class MainScheduleResponseListDto {
-    private ArrayList<MainSchedule> mainScheduleArrayList;
+    private ArrayList<MainScheduleResponseDto> mainScheduleResponseDtoArrayList;
     private Long status;
 
-    public MainScheduleResponseListDto(ArrayList<MainSchedule> mainScheduleArrayList, Long status){
-        this.mainScheduleArrayList = mainScheduleArrayList;
+    public MainScheduleResponseListDto(ArrayList<MainScheduleResponseDto> mainScheduleResponseDtoArrayList, Long status){
+        this.mainScheduleResponseDtoArrayList = mainScheduleResponseDtoArrayList;
         this.status = status;
     }
 }
