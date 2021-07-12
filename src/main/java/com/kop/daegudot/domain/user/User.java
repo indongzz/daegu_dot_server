@@ -36,8 +36,11 @@ public class User {
         this.type = type;
     }
 
-    public void update(String nickname, String password){
+    public void nicknameUpdate(String nickname){
         this.nickname = nickname;
+    }
+
+    public void passwordUpdate(String password){
         this.password = password;
     }
 }
