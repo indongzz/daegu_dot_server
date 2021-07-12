@@ -4,6 +4,7 @@ package com.kop.daegudot.web;
 import com.kop.daegudot.service.subschedule.SubScheduleService;
 import com.kop.daegudot.web.dto.subschedule.SubScheduleRegisterDto;
 import com.kop.daegudot.web.dto.subschedule.SubScheduleResponseDto;
+import com.kop.daegudot.web.dto.subschedule.SubScheduleResponseListDto;
 import com.kop.daegudot.web.dto.subschedule.SubScheduleUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class SubScheduleController {
 
     //Subschedule inquiry
     @GetMapping("/schedule/sub/{mainscheduleId}")
-    public ArrayList<SubScheduleResponseDto> findByMainScheduleId(@PathVariable long mainscheduleId) {
+    public SubScheduleResponseListDto findByMainScheduleId(@PathVariable long mainscheduleId) {
         return mSubScheduleService.findByMainScheduleId(mainscheduleId);
     }
 
