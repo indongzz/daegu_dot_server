@@ -35,15 +35,22 @@ public class UserController {
         return mUserService.findByNickname(nickname);
     }
 
-    //TODO:닉네임 변경 및 비밀번호 변경 기능 추가
-    @PutMapping("/user/update/nickname/{userId}")
-    public Long updateNicknameById(@PathVariable long userId, @RequestBody UserUpdateNicknameDto userUpdateNicknameDto){
-        return mUserService.updateNicknameById(userId, userUpdateNicknameDto);
+    //토큰으로 닉네임 변경
+    @PutMapping("/user/update/nickname")
+    public ResponseEntity<Long> updateNickname(HttpServletRequest request, @RequestBody UserUpdateNicknameDto userUpdateNicknameDto){
+        String email = (String) request.getAttribute("email");
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        Long userId = mUserService.updateNicknameById(userResponseDto.getId(), userUpdateNicknameDto);
+        return ResponseEntity.ok().body(userId);
     }
 
-    @PutMapping("/user/update/password/{userId}")
-    public Long updatePasswordById(@PathVariable long userId, @RequestBody UserUpdatePasswordDto userUpdatePasswordDto){
-        return mUserService.updatePasswordById(userId, userUpdatePasswordDto);
+    //토큰으로 비밀번호 변경
+    @PutMapping("/user/update/password")
+    public ResponseEntity<Long> updatePassword(HttpServletRequest request, @RequestBody UserUpdatePasswordDto userUpdatePasswordDto){
+        String email = (String) request.getAttribute("email");
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        Long userId = mUserService.updatePasswordById(userResponseDto.getId(), userUpdatePasswordDto);
+        return ResponseEntity.ok().body(userId);
     }
 
     //Login
@@ -60,11 +67,5 @@ public class UserController {
         return ResponseEntity.ok().body(userResponseDto);
     }
 
-    @PutMapping("/user/update/nickname/test")
-    public ResponseEntity<Long> updateNicknameTest(HttpServletRequest request, @RequestBody UserUpdateNicknameDto userUpdateNicknameDto){
-        String email = (String) request.getAttribute("email");
-        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
-        Long userId = mUserService.updateNicknameById(userResponseDto.getId(), userUpdateNicknameDto);
-        return ResponseEntity.ok().body(userId);
-    }
+
 }
