@@ -10,12 +10,10 @@ public class MainScheduleResponseDto {
     private long id;
     private LocalDate startDate;
     private LocalDate endDate;
-    private User user;
 
     public MainScheduleResponseDto(MainSchedule mainSchedule) {
         this.id = mainSchedule.getId();
         this.startDate = mainSchedule.getStartDate();
         this.endDate = mainSchedule.getEndDate();
-        this.user = mainSchedule.getUser();
     }
 }
