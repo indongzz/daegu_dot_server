@@ -8,16 +8,15 @@ import com.kop.daegudot.domain.subschedule.SubSchedule;
 import com.kop.daegudot.domain.subschedule.SubScheduleRepository;
 import com.kop.daegudot.web.dto.subschedule.SubScheduleRegisterDto;
 import com.kop.daegudot.web.dto.subschedule.SubScheduleResponseDto;
+import com.kop.daegudot.web.dto.subschedule.SubScheduleResponseListDto;
 import com.kop.daegudot.web.dto.subschedule.SubScheduleUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -33,12 +32,12 @@ public class SubScheduleService {
                 .orElseThrow(()->new IllegalArgumentException("There is no id = " + subScheduleRegisterDto.getPlacesId()));
         MainSchedule mainSchedule = mMainScheduleRepository.findById(subScheduleRegisterDto.getMainScheduleId())
                 .orElseThrow(()->new IllegalArgumentException("There is no id = " + subScheduleRegisterDto.getMainScheduleId()));
-
-        return mSubScheduleRepository.save(subScheduleRegisterDto.toEntity(places, mainSchedule)).getId();
+        mSubScheduleRepository.save(subScheduleRegisterDto.toEntity(places, mainSchedule));
+        return 1L;
     }
 
     //SELECT * FROM sub_schedule WHERE main_schedule_id = ?
-    public ArrayList<SubScheduleResponseDto> findByMainScheduleId(long mainScheduleId){
+    /* public ArrayList<SubScheduleResponseDto> findByMainScheduleId(long mainScheduleId){
         ArrayList<SubScheduleResponseDto> subScheduleResponseDtoArrayList = new ArrayList<>();
         ArrayList<SubSchedule> subScheduleArrayList;
 
@@ -51,13 +50,36 @@ public class SubScheduleService {
 
         return subScheduleResponseDtoArrayList;
     }
+    */
+
+    public SubScheduleResponseListDto findByMainScheduleId(long mainScheduleId){
+        ArrayList<SubScheduleResponseDto> subScheduleResponseDtoArrayList;
+        ArrayList<SubSchedule> subScheduleArrayList;
+        SubScheduleResponseListDto subScheduleResponseListDto;
+
+        subScheduleArrayList = mSubScheduleRepository.findByMainScheduleId(mainScheduleId);
+        subScheduleResponseDtoArrayList = new ArrayList<>();
+        if(subScheduleArrayList.size() > 0){
+            for(int i=0; i<subScheduleArrayList.size();i++){
+                SubScheduleResponseDto subScheduleResponseDto = new SubScheduleResponseDto(subScheduleArrayList.get(i));
+                subScheduleResponseDtoArrayList.add(subScheduleResponseDto);
+            }
+            subScheduleResponseListDto = new SubScheduleResponseListDto(subScheduleResponseDtoArrayList, 1L);
+        }
+        else
+            subScheduleResponseListDto = new SubScheduleResponseListDto(subScheduleResponseDtoArrayList, 0L);
+
+        return subScheduleResponseListDto;
+    }
 
     //DELETE
-    public void deleteById(long subscheduleId){
+    public Long deleteById(long subscheduleId){
         mSubScheduleRepository.deleteById(subscheduleId);
+        return 1L;
     }
 
     //UPDATE
+    @Transactional
     public Long updateById(long subscheduleId, SubScheduleUpdateDto subScheduleUpdateDto){
         SubSchedule subSchedule = mSubScheduleRepository.findById(subscheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("There is no subschedule id = "+subscheduleId));
@@ -66,6 +88,6 @@ public class SubScheduleService {
         subSchedule.update(LocalDate.parse(subScheduleUpdateDto.getDate(), DateTimeFormatter.ISO_DATE)
                 , places);
         mSubScheduleRepository.save(subSchedule);
-        return subscheduleId;
+        return 1L;
     }
 }
