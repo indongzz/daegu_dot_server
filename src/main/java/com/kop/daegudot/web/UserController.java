@@ -59,4 +59,12 @@ public class UserController {
         UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
         return ResponseEntity.ok().body(userResponseDto);
     }
+
+    @PutMapping("/user/update/nickname/test")
+    public ResponseEntity<Long> updateNicknameTest(HttpServletRequest request, @RequestBody UserUpdateNicknameDto userUpdateNicknameDto){
+        String email = (String) request.getAttribute("email");
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        Long userId = mUserService.updateNicknameById(userResponseDto.getId(), userUpdateNicknameDto);
+        return ResponseEntity.ok().body(userId);
+    }
 }
