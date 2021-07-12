@@ -35,17 +35,25 @@ public class MainScheduleService {
 
     @Transactional
     public MainScheduleResponseListDto findByUserId(String email) {
-        ArrayList<MainSchedule> mainScheduleList;
+        ArrayList<MainScheduleResponseDto> mainScheduleResponseDtoArrayList;
+        ArrayList<MainSchedule> mainScheduleArrayList;
         MainScheduleResponseListDto mainScheduleResponseListDto;
 
         User user = mUserRepository.findByEmail(email);
 
-        mainScheduleList = mMainScheduleRepository.findByUserId(user.getId());
-        if(mainScheduleList.size() > 0)
-            mainScheduleResponseListDto = new MainScheduleResponseListDto(mainScheduleList, 1L);
-        else
-            mainScheduleResponseListDto = new MainScheduleResponseListDto(mainScheduleList, 0L);
+        mainScheduleArrayList = mMainScheduleRepository.findByUserId(user.getId());
+        mainScheduleResponseDtoArrayList = new ArrayList<>();
+        if(mainScheduleArrayList.size() > 0){
+            for(int i=0; i<mainScheduleArrayList.size();i++){
+                MainSchedule mainSchedule = mainScheduleArrayList.get(i);
+                MainScheduleResponseDto mainScheduleResponseDto = new MainScheduleResponseDto(mainSchedule);
+                mainScheduleResponseDtoArrayList.add(mainScheduleResponseDto);
+            }
+            mainScheduleResponseListDto = new MainScheduleResponseListDto(mainScheduleResponseDtoArrayList, 1L);
+        }
 
+        else
+            mainScheduleResponseListDto = new MainScheduleResponseListDto(mainScheduleResponseDtoArrayList, 0L);
         return mainScheduleResponseListDto;
     }
 
