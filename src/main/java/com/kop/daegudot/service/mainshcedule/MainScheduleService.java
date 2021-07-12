@@ -6,8 +6,11 @@ import com.kop.daegudot.domain.user.User;
 import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleRegisterDto;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleResponseDto;
+import com.kop.daegudot.web.dto.mainshcedule.MainScheduleResponseListDto;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleUpdateDto;
+import com.kop.daegudot.web.dto.user.UserResponseDto;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,35 +29,40 @@ public class MainScheduleService {
     public Long saveMainSchedule(MainScheduleRegisterDto mainScheduleRegisterDto) {
         User user = mUserRepository.findById(mainScheduleRegisterDto.getUserId())
                 .orElseThrow(()->new IllegalArgumentException("There is no user id = " + mainScheduleRegisterDto.getUserId()));
-        return mMainScheduleRepository.save(mainScheduleRegisterDto.toEntity(user)).getId();
+        mMainScheduleRepository.save(mainScheduleRegisterDto.toEntity(user));
+        return 1L;
     }
 
-    //SELECT * FROM main_schedule WHERE user_id = ?
-    public ArrayList<MainScheduleResponseDto> findByUserId(long userId) {
+    @Transactional
+    public MainScheduleResponseListDto findByUserId(String email) {
         ArrayList<MainSchedule> mainScheduleList;
-        ArrayList<MainScheduleResponseDto> mainScheduleResponseDtoArrayList = new ArrayList<>();
+        MainScheduleResponseListDto mainScheduleResponseListDto;
 
-        mainScheduleList = mMainScheduleRepository.findByUserId(userId);
-        for(int i=0; i<mainScheduleList.size();i++) {
-            MainScheduleResponseDto mainScheduleResponseDto = new MainScheduleResponseDto(mainScheduleList.get(i));
-            mainScheduleResponseDtoArrayList.add(mainScheduleResponseDto);
-        }
-        return mainScheduleResponseDtoArrayList;
+        User user = mUserRepository.findByEmail(email);
+
+        mainScheduleList = mMainScheduleRepository.findByUserId(user.getId());
+        if(mainScheduleList.size() > 0)
+            mainScheduleResponseListDto = new MainScheduleResponseListDto(mainScheduleList, 1L);
+        else
+            mainScheduleResponseListDto = new MainScheduleResponseListDto(mainScheduleList, 0L);
+
+        return mainScheduleResponseListDto;
     }
 
     //DELETE
     public Long deleteById(long mainScheduleId) {
         mMainScheduleRepository.deleteById(mainScheduleId);
-        return mainScheduleId;
+        return 1L;
     }
 
     //UPDATE
+    @Transactional
     public Long updateById(long mainScheduleId, MainScheduleUpdateDto mainScheduleUpdateDto) {
         MainSchedule mainSchedule = mMainScheduleRepository.findById(mainScheduleId)
                 .orElseThrow(()->new IllegalArgumentException("There is no id = " + mainScheduleId));
         mainSchedule.update(LocalDate.parse(mainScheduleUpdateDto.getStartDate(), DateTimeFormatter.ISO_DATE),
                 LocalDate.parse(mainScheduleUpdateDto.getEndDate(), DateTimeFormatter.ISO_DATE));
         mMainScheduleRepository.save(mainSchedule);
-        return mainScheduleId;
+        return 1L;
     }
 }

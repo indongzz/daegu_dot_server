@@ -4,11 +4,15 @@ import com.kop.daegudot.domain.mainschedule.MainSchedule;
 import com.kop.daegudot.service.mainshcedule.MainScheduleService;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleRegisterDto;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleResponseDto;
+import com.kop.daegudot.web.dto.mainshcedule.MainScheduleResponseListDto;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleUpdateDto;
+import com.kop.daegudot.web.dto.user.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.jni.Local;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,9 +29,10 @@ public class MainScheduleController {
     }
 
     //Mainschedule inquiry
-    @GetMapping("/schedule/main/{userId}")
-    public ArrayList<MainScheduleResponseDto> findByUserId(@PathVariable long userId) {
-        return mMainScheduleService.findByUserId(userId);
+    @GetMapping("/schedule/main")
+    public ResponseEntity<MainScheduleResponseListDto> findByUserId(HttpServletRequest request) {
+        String email = (String) request.getAttribute("email");
+        return ResponseEntity.ok().body(mMainScheduleService.findByUserId(email));
     }
 
     /* Delete MainSchedule
