@@ -3,10 +3,7 @@ package com.kop.daegudot.web;
 import com.kop.daegudot.domain.user.User;
 import com.kop.daegudot.service.user.UserService;
 import com.kop.daegudot.web.dto.TokenResponseDto;
-import com.kop.daegudot.web.dto.user.UserLoginDto;
-import com.kop.daegudot.web.dto.user.UserResponseDto;
-import com.kop.daegudot.web.dto.user.UserRegisterDto;
-import com.kop.daegudot.web.dto.user.UserUpdateDto;
+import com.kop.daegudot.web.dto.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,9 +36,14 @@ public class UserController {
     }
 
     //TODO:닉네임 변경 및 비밀번호 변경 기능 추가
-    @PutMapping("/user/update/{userId}")
-    public Long updateById(@PathVariable long userId, @RequestBody UserUpdateDto userUpdateDto){
-        return mUserService.updateById(userId, userUpdateDto);
+    @PutMapping("/user/update/nickname/{userId}")
+    public Long updateNicknameById(@PathVariable long userId, @RequestBody UserUpdateNicknameDto userUpdateNicknameDto){
+        return mUserService.updateNicknameById(userId, userUpdateNicknameDto);
+    }
+
+    @PutMapping("/user/update/password/{userId}")
+    public Long updatePasswordById(@PathVariable long userId, @RequestBody UserUpdatePasswordDto userUpdatePasswordDto){
+        return mUserService.updatePasswordById(userId, userUpdatePasswordDto);
     }
 
     //Login
