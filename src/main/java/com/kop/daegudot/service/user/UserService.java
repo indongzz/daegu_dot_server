@@ -39,7 +39,7 @@ public class UserService {
         return new UserResponseDto(user);
     }
 
-    // UPDATE
+    // UPDATE NICKNAME
     public Long updateNicknameById(long userId, UserUpdateNicknameDto userUpdateNicknameDto){
         User user = mUserRepository.findById(userId)
                 .orElseThrow(()->new IllegalArgumentException("There is no places id = " + userId));
@@ -48,6 +48,7 @@ public class UserService {
         return userId;
     }
 
+    //UPDATE PASSWORD
     public Long updatePasswordById(long userId, UserUpdatePasswordDto userUpdatePasswordDto){
         User user = mUserRepository.findById(userId)
                 .orElseThrow(()->new IllegalArgumentException("There is no places id = " + userId));
