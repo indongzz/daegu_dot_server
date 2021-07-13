@@ -37,27 +37,13 @@ public class SubScheduleService {
     }
 
     //SELECT * FROM sub_schedule WHERE main_schedule_id = ?
-    /* public ArrayList<SubScheduleResponseDto> findByMainScheduleId(long mainScheduleId){
-        ArrayList<SubScheduleResponseDto> subScheduleResponseDtoArrayList = new ArrayList<>();
-        ArrayList<SubSchedule> subScheduleArrayList;
-
-        subScheduleArrayList = mSubScheduleRepository.findByMainScheduleId(mainScheduleId);
-
-        for(int i=0; i<subScheduleArrayList.size();i++){
-            SubScheduleResponseDto subScheduleResponseDto = new SubScheduleResponseDto(subScheduleArrayList.get(i));
-            subScheduleResponseDtoArrayList.add(subScheduleResponseDto);
-        }
-
-        return subScheduleResponseDtoArrayList;
-    }
-    */
-
     public SubScheduleResponseListDto findByMainScheduleId(long mainScheduleId){
         ArrayList<SubScheduleResponseDto> subScheduleResponseDtoArrayList;
         ArrayList<SubSchedule> subScheduleArrayList;
         SubScheduleResponseListDto subScheduleResponseListDto;
 
-        subScheduleArrayList = mSubScheduleRepository.findByMainScheduleId(mainScheduleId);
+        subScheduleArrayList = mSubScheduleRepository.findByMainScheduleId(mainScheduleId)
+                .orElseThrow(() -> new IllegalArgumentException("SubSchedule 조회 오류: " + mainScheduleId));
         subScheduleResponseDtoArrayList = new ArrayList<>();
         if(subScheduleArrayList.size() > 0){
             for(int i=0; i<subScheduleArrayList.size();i++){

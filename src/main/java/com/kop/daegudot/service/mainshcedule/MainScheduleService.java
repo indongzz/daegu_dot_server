@@ -28,7 +28,7 @@ public class MainScheduleService {
     @Transactional
     public Long saveMainSchedule(MainScheduleRegisterDto mainScheduleRegisterDto) {
         User user = mUserRepository.findById(mainScheduleRegisterDto.getUserId())
-                .orElseThrow(()->new IllegalArgumentException("There is no user id = " + mainScheduleRegisterDto.getUserId()));
+                .orElseThrow(()->new IllegalArgumentException("UserID 오류: " + mainScheduleRegisterDto.getUserId()));
         mMainScheduleRepository.save(mainScheduleRegisterDto.toEntity(user));
         return 1L;
     }
@@ -39,9 +39,11 @@ public class MainScheduleService {
         ArrayList<MainSchedule> mainScheduleArrayList;
         MainScheduleResponseListDto mainScheduleResponseListDto;
 
-        User user = mUserRepository.findByEmail(email);
+        User user = mUserRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("EMAIL 오류:" + email));
 
-        mainScheduleArrayList = mMainScheduleRepository.findByUserId(user.getId());
+        mainScheduleArrayList = mMainScheduleRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("MainSchedule 조회 오류: " + user.getId()));
         mainScheduleResponseDtoArrayList = new ArrayList<>();
         if(mainScheduleArrayList.size() > 0){
             for(int i=0; i<mainScheduleArrayList.size();i++){
