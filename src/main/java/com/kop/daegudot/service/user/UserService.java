@@ -28,14 +28,16 @@ public class UserService {
 
     // SELECT * FROM USER WHERE email = ?
     public UserResponseDto findByEmail(String email) {
-        User user = mUserRepository.findByEmail(email);
+        User user = mUserRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User 조회 오류: " + email));
         return new UserResponseDto(user);
     }
 
     // SELECT * FROM USER WHERE nickname = ?
     public UserResponseDto findByNickname(String nickname) {
         System.out.println(nickname);
-        User user = mUserRepository.findByNickname(nickname);
+        User user = mUserRepository.findByNickname(nickname)
+                .orElseThrow(() -> new IllegalArgumentException("User 조회 오류: " + nickname));
         return new UserResponseDto(user);
     }
 
@@ -59,8 +61,8 @@ public class UserService {
 
     // SELECT * FROM USER WHERE email = ? AND password = ?
     public UserResponseDto findByEmailAndPassword(UserLoginDto userLoginDto) {
-        User user = mUserRepository.findByEmailAndPassword(userLoginDto.getEmail(),
-                userLoginDto.getPassword());
+        User user = mUserRepository.findByEmailAndPassword(userLoginDto.getEmail(), userLoginDto.getPassword())
+                .orElseThrow(() -> new IllegalArgumentException("User 조회 오류: " + userLoginDto.getEmail() + " " + userLoginDto.getPassword()));
         return new UserResponseDto(user);
     }
 
