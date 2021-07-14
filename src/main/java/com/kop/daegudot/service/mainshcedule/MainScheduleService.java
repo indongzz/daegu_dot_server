@@ -29,8 +29,7 @@ public class MainScheduleService {
     public Long saveMainSchedule(MainScheduleRegisterDto mainScheduleRegisterDto) {
         User user = mUserRepository.findById(mainScheduleRegisterDto.getUserId())
                 .orElseThrow(()->new IllegalArgumentException("UserID 오류: " + mainScheduleRegisterDto.getUserId()));
-        mMainScheduleRepository.save(mainScheduleRegisterDto.toEntity(user));
-        return 1L;
+        return mMainScheduleRepository.save(mainScheduleRegisterDto.toEntity(user)).getId();
     }
 
     @Transactional
