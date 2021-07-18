@@ -14,11 +14,13 @@ public class RecommendScheduleUpdateDto {
     private String content;
     private long mainScheduleId;
     private ArrayList<Long> hashtagId;
+    private double star;
 
-    public RecommendScheduleUpdateDto(String title, String content, long mainScheduleId, ArrayList<Long> hastagId){
+    public RecommendScheduleUpdateDto(String title, String content, long mainScheduleId, ArrayList<Long> hastagId, double star){
         this.title = title;
         this.content = content;
         this.mainScheduleId = mainScheduleId;
         this.hashtagId = hastagId;
+        this.star = star;
     }
 }
