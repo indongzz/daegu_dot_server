@@ -38,10 +38,9 @@ public class RecommendController {
         return mRecommendService.deleteRecommendSchedule(recommendScheduleId);
     }
 
-
     //해시태그 리스트
-    @GetMapping("/hashtag/list")
-    public ArrayList<HashtagResponseDto> findAll(){
+    @GetMapping("/hashtag")
+    public HashtagResponseListDto findAll(){
         return mRecommendService.findAll();
     }
 }

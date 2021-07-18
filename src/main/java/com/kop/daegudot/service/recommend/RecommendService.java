@@ -91,15 +91,22 @@ public class RecommendService {
     }
 
     //SELECT * FROM Hashtag
-    public ArrayList<HashtagResponseDto> findAll(){
+    public HashtagResponseListDto findAll(){
         ArrayList<Hashtag> hashtagArrayList;
         ArrayList<HashtagResponseDto> hashtagResponseDtoArrayList = new ArrayList<>();
+        HashtagResponseListDto hashtagResponseListDto;
 
         hashtagArrayList = (ArrayList<Hashtag>) mHashtagRepository.findAll();
-        for(int i=0; i<hashtagArrayList.size();i++){
-            HashtagResponseDto hashtagResponseDto = new HashtagResponseDto(hashtagArrayList.get(i));
-            hashtagResponseDtoArrayList.add(hashtagResponseDto);
+        if(hashtagArrayList.size() > 0){
+            for(int i=0; i<hashtagArrayList.size();i++){
+                HashtagResponseDto hashtagResponseDto = new HashtagResponseDto(hashtagArrayList.get(i));
+                hashtagResponseDtoArrayList.add(hashtagResponseDto);
+            }
+            hashtagResponseListDto = new HashtagResponseListDto(hashtagResponseDtoArrayList, 1L);
         }
-        return hashtagResponseDtoArrayList;
+        else{
+            hashtagResponseListDto = new HashtagResponseListDto(hashtagResponseDtoArrayList, 0L);
+        }
+        return hashtagResponseListDto;
     }
 }
