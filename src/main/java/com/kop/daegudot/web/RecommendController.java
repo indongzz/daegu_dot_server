@@ -1,10 +1,7 @@
 package com.kop.daegudot.web;
 
 import com.kop.daegudot.service.recommend.RecommendService;
-import com.kop.daegudot.web.dto.recommend.HashtagResponseDto;
-import com.kop.daegudot.web.dto.recommend.RecommendScheduleRegisterDto;
-import com.kop.daegudot.web.dto.recommend.RecommendScheduleResponseDto;
-import com.kop.daegudot.web.dto.recommend.RecommendScheduleUpdateDto;
+import com.kop.daegudot.web.dto.recommend.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +20,7 @@ public class RecommendController {
 
     //추천된 일정 나열하기
     @GetMapping("/recommend")
-    public ArrayList<RecommendScheduleResponseDto> listRecommendSchedule(){
+    public RecommendScheduleResponseListDto listRecommendSchedule(){
         return mRecommendService.findAllRecommendSchedule();
     }
 
@@ -31,13 +28,14 @@ public class RecommendController {
     @PutMapping("/recommend/update/{recommendScheduleId}")
     public Long updateRecommendSchedule(@PathVariable long recommendScheduleId,
                                         @RequestBody RecommendScheduleUpdateDto recommendScheduleUpdateDto){
-        return mRecommendService.updateRecommendSchedule(recommendScheduleId, recommendScheduleUpdateDto);
+        mRecommendService.updateRecommendSchedule(recommendScheduleId, recommendScheduleUpdateDto);
+        return 1L;
     }
 
     //추천 삭제하기
-    @DeleteMapping("/recommend/delete/{id}")
-    public void deleteRecommendSchedule(@PathVariable long id){
-        mRecommendService.deleteRecommendSchedule(id);
+    @DeleteMapping("/recommend/delete/{recommendScheduleId}")
+    public Long deleteRecommendSchedule(@PathVariable long recommendScheduleId){
+        return mRecommendService.deleteRecommendSchedule(recommendScheduleId);
     }
 
 

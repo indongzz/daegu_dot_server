@@ -15,16 +15,18 @@ public class RecommendScheduleRegisterDto {
     private String title;
     private String content;
     private long mainScheduleId;
+    private double star;
     private ArrayList<Long> hashtagId;
 
-    public RecommendScheduleRegisterDto(String title, String content, long mainScheduleId, ArrayList<Long> hashtagsId){
+    public RecommendScheduleRegisterDto(String title, String content, long mainScheduleId, double star, ArrayList<Long> hashtagsId){
         this.title = title;
         this.content = content;
         this.mainScheduleId = mainScheduleId;
         this.hashtagId = hashtagsId;
+        this.star = star;
     }
 
     public RecommendSchedule toEntity(MainSchedule mainSchedule, ArrayList<Hashtag> hashtags, LocalDateTime datetime){
-        return RecommendSchedule.builder().mainSchedule(mainSchedule).title(title).content(content).hashtags(hashtags).datetime(datetime).build();
+        return RecommendSchedule.builder().mainSchedule(mainSchedule).title(title).content(content).hashtags(hashtags).datetime(datetime).star(star).build();
     }
 }

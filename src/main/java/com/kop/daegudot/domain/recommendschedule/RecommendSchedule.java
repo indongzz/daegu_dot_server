@@ -42,20 +42,24 @@ public class RecommendSchedule {
     @JoinColumn(name = "hashtag_id")
     private List<Hashtag> hashtags;
 
+    private double star;
+
     @Builder
-    public RecommendSchedule(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags, LocalDateTime datetime){
+    public RecommendSchedule(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags, LocalDateTime datetime, double star){
         this.mainSchedule = mainSchedule;
         this.title = title;
         this.content = content;
         this.hashtags = hashtags;
         this.datetime = datetime;
+        this.star = star;
     }
 
-    public void update(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags, LocalDateTime datetime){
+    public void update(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags, LocalDateTime datetime, double star){
         this.mainSchedule = mainSchedule;
         this.title = title;
         this.content = content;
         this.hashtags = hashtags;
         this.datetime = datetime;
+        this.star = star;
     }
 }
