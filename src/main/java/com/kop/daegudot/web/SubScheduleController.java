@@ -31,8 +31,8 @@ public class SubScheduleController {
 
     //Delete SubSchedule
     @DeleteMapping("/schedule/sub/delete/{subscheduleId}")
-    public void deleteById(@PathVariable long subscheduleId) {
-        mSubScheduleService.deleteById(subscheduleId);
+    public Long deleteById(@PathVariable long subscheduleId) {
+        return mSubScheduleService.deleteById(subscheduleId);
     }
 
     //Update SubSchedule
