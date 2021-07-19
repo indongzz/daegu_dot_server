@@ -43,7 +43,6 @@ public class JwtTokenProvider {
     public boolean validateToken(String token){
         try{
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            System.out.println(claimsJws.getBody().getExpiration());
             if(claimsJws.getBody().getExpiration().before(new Date())) return false;
             return true;
         } catch (JwtException | IllegalArgumentException e){
