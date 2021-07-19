@@ -31,9 +31,9 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
         if(StringUtils.isEmpty(token)){
             return true;
         }
-        if(!jwtTokenProvider.validateToken(token)){
+        /*if(!jwtTokenProvider.validateToken(token)){
             throw new IllegalArgumentException("유효하지 않은 토큰");
-        }
+        }*/
 
         String subject = jwtTokenProvider.getSubeject(token);
         request.setAttribute("email", subject);
