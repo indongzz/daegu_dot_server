@@ -47,7 +47,7 @@ public class RecommendService {
         ArrayList<RecommendScheduleResponseDto> recommendScheduleResponseDtoArrayList = new ArrayList<>();
         RecommendScheduleResponseListDto recommendScheduleResponseListDto;
 
-        recommendScheduleList = mRecommendScheduleRepository.findByHashtagId(hashtagId)
+        recommendScheduleList = mRecommendScheduleRepository.findByHashtagsId(hashtagId)
                 .orElseThrow(() -> new IllegalArgumentException("There is no id" + hashtagId));
         if(recommendScheduleList.size() > 0){
             for(int i=0; i<recommendScheduleList.size();i++){
