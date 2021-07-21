@@ -93,7 +93,7 @@ public class RecommendService {
     }
 
     //SELECT * FROM Hashtag
-    public HashtagResponseListDto findAll(){
+    public HashtagResponseListDto findHashtag(){
         ArrayList<Hashtag> hashtagArrayList;
         ArrayList<HashtagResponseDto> hashtagResponseDtoArrayList = new ArrayList<>();
         HashtagResponseListDto hashtagResponseListDto;

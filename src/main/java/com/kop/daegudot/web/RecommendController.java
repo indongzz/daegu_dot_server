@@ -40,7 +40,7 @@ public class RecommendController {
 
     //해시태그 리스트
     @GetMapping("/hashtag")
-    public HashtagResponseListDto findAll(){
-        return mRecommendService.findAll();
+    public HashtagResponseListDto findAllHashtag(){
+        return mRecommendService.findHashtag();
     }
 }
