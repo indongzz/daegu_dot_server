@@ -1,6 +1,6 @@
 package com.kop.daegudot.web;
 
-import com.kop.daegudot.web.dto.PlacesDto;
+import com.kop.daegudot.web.dto.places.PlacesDto;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

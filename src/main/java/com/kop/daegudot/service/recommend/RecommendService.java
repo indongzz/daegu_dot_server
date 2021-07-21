@@ -42,15 +42,17 @@ public class RecommendService {
     }
 
     //SELECT * FROM RecommendSchedule
-    public RecommendScheduleResponseListDto findAllRecommendSchedule(){
+    public RecommendScheduleResponseListDto findRecommendSchedule(long hashtagId){
         List<RecommendSchedule> recommendScheduleList;
         ArrayList<RecommendScheduleResponseDto> recommendScheduleResponseDtoArrayList = new ArrayList<>();
         RecommendScheduleResponseListDto recommendScheduleResponseListDto;
 
-        recommendScheduleList = mRecommendScheduleRepository.findAll();
+        recommendScheduleList = mRecommendScheduleRepository.findByHashtagId(hashtagId)
+                .orElseThrow(() -> new IllegalArgumentException("There is no id" + hashtagId));
         if(recommendScheduleList.size() > 0){
             for(int i=0; i<recommendScheduleList.size();i++){
-                RecommendScheduleResponseDto recommendScheduleResponseDto = new RecommendScheduleResponseDto(recommendScheduleList.get(i));
+                RecommendScheduleResponseDto recommendScheduleResponseDto
+                        = new RecommendScheduleResponseDto(recommendScheduleList.get(i));
                 recommendScheduleResponseDtoArrayList.add(recommendScheduleResponseDto);
             }
             recommendScheduleResponseListDto = new RecommendScheduleResponseListDto(recommendScheduleResponseDtoArrayList, 1L);

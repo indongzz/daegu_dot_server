@@ -1,11 +1,8 @@
 package com.kop.daegudot.web.dto.subschedule;
 
 import com.kop.daegudot.domain.subschedule.SubSchedule;
-import com.kop.daegudot.web.dto.PlacesResponseDto;
+import com.kop.daegudot.web.dto.places.PlacesResponseDto;
 import lombok.Getter;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Getter
 public class SubScheduleResponseDto {

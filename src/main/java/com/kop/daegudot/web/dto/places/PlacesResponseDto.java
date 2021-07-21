@@ -1,4 +1,4 @@
-package com.kop.daegudot.web.dto;
+package com.kop.daegudot.web.dto.places;
 
 import com.kop.daegudot.domain.places.Places;
 import lombok.Getter;
