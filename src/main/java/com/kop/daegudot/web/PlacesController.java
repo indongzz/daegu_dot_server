@@ -2,9 +2,10 @@ package com.kop.daegudot.web;
 
 
 import com.kop.daegudot.service.places.PlacesService;
-import com.kop.daegudot.web.dto.PlacesDto;
-import com.kop.daegudot.web.dto.PlacesLocationDto;
-import com.kop.daegudot.web.dto.PlacesResponseDto;
+import com.kop.daegudot.web.dto.places.PlaceRegsterDto;
+import com.kop.daegudot.web.dto.places.PlacesDto;
+import com.kop.daegudot.web.dto.places.PlacesLocationDto;
+import com.kop.daegudot.web.dto.places.PlacesResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,11 @@ public class PlacesController {
     @PutMapping("/places/location")
     public long saveLocation(@RequestBody ArrayList<PlacesLocationDto> placesLocationDtoArrayList){
         return mPlacesService.updateLocation(placesLocationDtoArrayList);
+    }
+
+    @PostMapping("/places/register/location")
+    public long saveNewLocation(@RequestBody ArrayList<PlaceRegsterDto> placesRegisterDtoArrayList){
+        return mPlacesService.saveNewLocation(placesRegisterDtoArrayList);
     }
 
 }

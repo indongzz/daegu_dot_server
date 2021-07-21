@@ -3,9 +3,10 @@ package com.kop.daegudot.service.places;
 
 import com.kop.daegudot.domain.places.Places;
 import com.kop.daegudot.domain.places.PlacesRepository;
-import com.kop.daegudot.web.dto.PlacesDto;
-import com.kop.daegudot.web.dto.PlacesLocationDto;
-import com.kop.daegudot.web.dto.PlacesResponseDto;
+import com.kop.daegudot.web.dto.places.PlaceRegsterDto;
+import com.kop.daegudot.web.dto.places.PlacesDto;
+import com.kop.daegudot.web.dto.places.PlacesLocationDto;
+import com.kop.daegudot.web.dto.places.PlacesResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,5 +52,15 @@ public class PlacesService {
         }
 
         return 1;
+    }
+
+    @Transactional
+    public long saveNewLocation(ArrayList<PlaceRegsterDto> placeRegsterDtoArrayList){
+        ArrayList<Places> placesArrayList = new ArrayList<>();
+        for(int i=0; i<placeRegsterDtoArrayList.size();i++){
+            placesArrayList.add(placeRegsterDtoArrayList.get(i).toEntity());
+        }
+        mPlacesRepository.saveAll(placesArrayList);
+        return 1L;
     }
 }

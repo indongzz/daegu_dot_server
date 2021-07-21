@@ -19,9 +19,9 @@ public class RecommendController {
     }
 
     //추천된 일정 나열하기
-    @GetMapping("/recommend")
-    public RecommendScheduleResponseListDto listRecommendSchedule(){
-        return mRecommendService.findAllRecommendSchedule();
+    @GetMapping("/recommend/{hashtagId}")
+    public RecommendScheduleResponseListDto listRecommendSchedule(@PathVariable long hashtagId){
+        return mRecommendService.findRecommendSchedule(hashtagId);
     }
 
     //추천 수정하기

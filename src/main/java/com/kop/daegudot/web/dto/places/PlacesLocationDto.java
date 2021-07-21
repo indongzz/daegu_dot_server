@@ -1,4 +1,4 @@
-package com.kop.daegudot.web.dto;
+package com.kop.daegudot.web.dto.places;
 
 import lombok.Builder;
 import lombok.Getter;

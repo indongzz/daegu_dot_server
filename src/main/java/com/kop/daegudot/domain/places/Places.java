@@ -31,17 +31,22 @@ public class Places {
     private String longitude; //경도
     @Column
     private String latitude; //위도
+    @Column
+    private String category;
 
 
 
     @Builder
     public Places(String address, String attractContents, String attractName, String homepage,
-                  String telephone) {
+                  String telephone, String longitude, String latitude, String category) {
         this.address = address;
         this.attractContents = attractContents;
         this.attractName = attractName;
         this.homepage = homepage;
         this.telephone = telephone;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.category = category;
     }
 
     public void update(String longitude, String latitude){
