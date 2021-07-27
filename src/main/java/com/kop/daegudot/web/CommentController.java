@@ -1,33 +1,41 @@
 package com.kop.daegudot.web;
 
 import com.kop.daegudot.service.comment.CommentService;
+import com.kop.daegudot.service.user.UserService;
 import com.kop.daegudot.web.dto.comment.CommentRegisterDto;
 import com.kop.daegudot.web.dto.comment.CommentResponseDto;
+import com.kop.daegudot.web.dto.comment.CommentResponseListDto;
 import com.kop.daegudot.web.dto.comment.CommentUpdateDto;
 import com.kop.daegudot.web.dto.user.UserLoginDto;
 import com.kop.daegudot.web.dto.user.UserRegisterDto;
 import com.kop.daegudot.web.dto.user.UserResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 @RestController
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService mCommentService;
+    private final UserService mUserService;
 
     //댓글 안에 start이라는 변수로 별점 또한 존재
     //추천글마다 댓글 읽어오기
     @GetMapping("/comment/{recommendId}")
-    public ArrayList<CommentResponseDto> findAll(@PathVariable long recommendId){
+    public CommentResponseListDto findAll(@PathVariable long recommendId){
         return mCommentService.findAllByRecommendScheduleId(recommendId);
     }
 
     //추천글마다 댓글 등록하기
     @PostMapping("/comment/register")
-    public Long saveComment( @RequestBody CommentRegisterDto commentRegisterDto){
-        return mCommentService.saveComment(commentRegisterDto);
+    public ResponseEntity<Long> saveComment(HttpServletRequest request, @RequestBody CommentRegisterDto commentRegisterDto){
+        String email = (String) request.getAttribute("email");
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        Long commentId = mCommentService.saveComment(commentRegisterDto, userResponseDto.getId());
+        return ResponseEntity.ok().body(commentId);
     }
 
     //추천글마다 댓글 수정하기
@@ -38,8 +46,16 @@ public class CommentController {
 
     //추천글마다 댓글 삭제하기
     @DeleteMapping("/comment/delete/{commentId}")
-    public void deleteComment(@PathVariable long commentId){
-        mCommentService.deleteComment(commentId);
+    public Long deleteComment(@PathVariable long commentId){
+        return mCommentService.deleteComment(commentId);
     }
 
+    //내가 작성한 댓글 조회하기
+    @GetMapping("/more/comment")
+    public ResponseEntity<CommentResponseListDto> selectMyComment(HttpServletRequest request){
+        String email = (String) request.getAttribute("email");
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        CommentResponseListDto commentResponseListDto = mCommentService.selectMyComment(userResponseDto.getId());
+        return ResponseEntity.ok().body(commentResponseListDto);
+    }
 }

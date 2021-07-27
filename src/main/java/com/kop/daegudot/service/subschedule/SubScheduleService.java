@@ -39,11 +39,10 @@ public class SubScheduleService {
     //SELECT * FROM sub_schedule WHERE main_schedule_id = ?
     public SubScheduleResponseListDto findByMainScheduleId(long mainScheduleId){
         ArrayList<SubScheduleResponseDto> subScheduleResponseDtoArrayList;
-        ArrayList<SubSchedule> subScheduleArrayList;
+        ArrayList<SubSchedule> subScheduleArrayList = new ArrayList<>();
         SubScheduleResponseListDto subScheduleResponseListDto;
 
-        subScheduleArrayList = mSubScheduleRepository.findByMainScheduleId(mainScheduleId)
-                .orElseThrow(() -> new IllegalArgumentException("SubSchedule 조회 오류: " + mainScheduleId));
+        subScheduleArrayList = mSubScheduleRepository.findByMainScheduleId(mainScheduleId);
         subScheduleResponseDtoArrayList = new ArrayList<>();
         if(subScheduleArrayList.size() > 0){
             for(int i=0; i<subScheduleArrayList.size();i++){

@@ -7,6 +7,7 @@ import com.kop.daegudot.domain.mainschedule.MainSchedule;
 import javax.persistence.*;
 
 
+import com.kop.daegudot.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,14 +45,20 @@ public class RecommendSchedule {
 
     private double star;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Builder
-    public RecommendSchedule(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags, LocalDateTime datetime, double star){
+    public RecommendSchedule(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags,
+                             LocalDateTime datetime, double star, User user){
         this.mainSchedule = mainSchedule;
         this.title = title;
         this.content = content;
         this.hashtags = hashtags;
         this.datetime = datetime;
         this.star = star;
+        this.user = user;
     }
 
     public void update(MainSchedule mainSchedule, String title, String content, ArrayList<Hashtag> hashtags, LocalDateTime datetime, double star){

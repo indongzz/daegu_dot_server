@@ -6,6 +6,8 @@ import com.kop.daegudot.domain.mainschedule.MainSchedule;
 import com.kop.daegudot.domain.mainschedule.MainScheduleRepository;
 import com.kop.daegudot.domain.recommendschedule.RecommendSchedule;
 import com.kop.daegudot.domain.recommendschedule.RecommendScheduleRepository;
+import com.kop.daegudot.domain.user.User;
+import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.dto.recommend.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,14 +23,17 @@ public class RecommendService {
     private final RecommendScheduleRepository mRecommendScheduleRepository;
     private final HashtagRepository mHashtagRepository;
     private final MainScheduleRepository mMainscheduleRepository;
+    private final UserRepository mUserRepository;
 
 
     //INSERT TO
     @Transactional
-    public long saveRecommendSchedule(RecommendScheduleRegisterDto recommendScheduleRegisterDto){
+    public Long saveRecommendSchedule(RecommendScheduleRegisterDto recommendScheduleRegisterDto, long userId){
         LocalDateTime localDateTime = LocalDateTime.now();
         MainSchedule mainSchedule = mMainscheduleRepository.findById(recommendScheduleRegisterDto.getMainScheduleId())
                 .orElseThrow(()->new IllegalArgumentException("There is no mainschedule id = "+recommendScheduleRegisterDto.getMainScheduleId()));
+        User user = mUserRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("There is no User id = " + userId));
 
         ArrayList<Hashtag> hashtagArrayList = new ArrayList<>();
         for(int i=0; i<recommendScheduleRegisterDto.getHashtagId().size();i++){
@@ -37,8 +42,7 @@ public class RecommendService {
                     .orElseThrow(()->new IllegalArgumentException("There is no hashtag id = "+idx));
             hashtagArrayList.add(hashtag);
         }
-
-        return mRecommendScheduleRepository.save(recommendScheduleRegisterDto.toEntity(mainSchedule, hashtagArrayList, localDateTime)).getId();
+        return mRecommendScheduleRepository.save(recommendScheduleRegisterDto.toEntity(mainSchedule, hashtagArrayList, localDateTime, user)).getId();
     }
 
     //SELECT * FROM RecommendSchedule
@@ -47,8 +51,7 @@ public class RecommendService {
         ArrayList<RecommendScheduleResponseDto> recommendScheduleResponseDtoArrayList = new ArrayList<>();
         RecommendScheduleResponseListDto recommendScheduleResponseListDto;
 
-        recommendScheduleList = mRecommendScheduleRepository.findByHashtagsId(hashtagId)
-                .orElseThrow(() -> new IllegalArgumentException("There is no id" + hashtagId));
+        recommendScheduleList = mRecommendScheduleRepository.findByHashtagsId(hashtagId);
         if(recommendScheduleList.size() > 0){
             for(int i=0; i<recommendScheduleList.size();i++){
                 RecommendScheduleResponseDto recommendScheduleResponseDto
@@ -110,5 +113,27 @@ public class RecommendService {
             hashtagResponseListDto = new HashtagResponseListDto(hashtagResponseDtoArrayList, 0L);
         }
         return hashtagResponseListDto;
+    }
+
+    //SELECT * FROM RecommendSchedule WHERE UserId = ?
+    public RecommendScheduleResponseListDto findMyRecommendSchedule(long userId){
+        List<RecommendSchedule> recommendScheduleList;
+        ArrayList<RecommendScheduleResponseDto> recommendScheduleResponseDtoArrayList = new ArrayList<>();
+        RecommendScheduleResponseListDto recommendScheduleResponseListDto;
+
+        recommendScheduleList = mRecommendScheduleRepository.findByUserId(userId);
+        if(recommendScheduleList.size() > 0){
+            for(int i=0; i<recommendScheduleList.size();i++){
+                RecommendScheduleResponseDto recommendScheduleResponseDto
+                        = new RecommendScheduleResponseDto(recommendScheduleList.get(i));
+                recommendScheduleResponseDtoArrayList.add(recommendScheduleResponseDto);
+            }
+            recommendScheduleResponseListDto = new RecommendScheduleResponseListDto(recommendScheduleResponseDtoArrayList, 1L);
+        }
+        else{
+            recommendScheduleResponseListDto = new RecommendScheduleResponseListDto(recommendScheduleResponseDtoArrayList, 0L);
+        }
+
+        return recommendScheduleResponseListDto;
     }
 }

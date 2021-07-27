@@ -6,5 +6,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public interface RecommendScheduleRepository extends JpaRepository<RecommendSchedule, Long> {
-    Optional<ArrayList<RecommendSchedule>> findByHashtagsId(long id);
+    ArrayList<RecommendSchedule> findByHashtagsId(long id);
+    ArrayList<RecommendSchedule> findByUserId(long id);
 }

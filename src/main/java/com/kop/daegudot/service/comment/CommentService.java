@@ -9,6 +9,7 @@ import com.kop.daegudot.domain.user.User;
 import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.dto.comment.CommentRegisterDto;
 import com.kop.daegudot.web.dto.comment.CommentResponseDto;
+import com.kop.daegudot.web.dto.comment.CommentResponseListDto;
 import com.kop.daegudot.web.dto.comment.CommentUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,25 +28,31 @@ public class CommentService {
     private final RecommendScheduleRepository mRecommendScheduleRepository;
 
     //SELECT * FROM Comment Where RecommendSchedule.id = ?
-    public ArrayList<CommentResponseDto> findAllByRecommendScheduleId(long id){
+    public CommentResponseListDto findAllByRecommendScheduleId(long id){
         ArrayList<Comment> commentArrayList;
         ArrayList<CommentResponseDto> commentResponseDtoArrayList = new ArrayList<>();
+        CommentResponseListDto commentResponseListDto;
 
         commentArrayList = mCommentRepository.findByRecommendScheduleId(id);
-        for(int i=0; i<commentArrayList.size();i++){
-            CommentResponseDto commentResponseDto = new CommentResponseDto(commentArrayList.get(i));
-            commentResponseDtoArrayList.add(commentResponseDto);
+        if(commentArrayList.size() > 0){
+            for(int i=0; i<commentArrayList.size();i++){
+                CommentResponseDto commentResponseDto = new CommentResponseDto(commentArrayList.get(i));
+                commentResponseDtoArrayList.add(commentResponseDto);
+            }
+            commentResponseListDto = new CommentResponseListDto(commentResponseDtoArrayList, 1L);
         }
-
-        return commentResponseDtoArrayList;
+        else{
+            commentResponseListDto = new CommentResponseListDto(commentResponseDtoArrayList, 0L);
+        }
+        return commentResponseListDto;
     }
 
     //Insert
     @Transactional
-    public Long saveComment(CommentRegisterDto commentRegisterDto){
+    public Long saveComment(CommentRegisterDto commentRegisterDto, long userId){
         LocalDateTime localDateTime = LocalDateTime.now();
-        User user = mUserRepository.findById(commentRegisterDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("There is no id =" + commentRegisterDto.getUserId()));
+        User user = mUserRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("There is no id =" + userId));
         RecommendSchedule recommendSchedule = mRecommendScheduleRepository.findById(commentRegisterDto.getRecommendScheduleId())
                 .orElseThrow(() -> new IllegalArgumentException("There is no id =" + commentRegisterDto.getRecommendScheduleId()));
         return mCommentRepository.save(commentRegisterDto.toEntity(user, recommendSchedule, localDateTime)).getId();
@@ -56,13 +63,33 @@ public class CommentService {
         LocalDateTime localDateTime = LocalDateTime.now();
         Comment comment = mCommentRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("There is no id =" + id));
-        comment.update(localDateTime, comment.getComments(), comment.getStar());
+        comment.update(localDateTime, comment.getComments());
         mCommentRepository.save(comment);
-        return id;
+        return 1L;
     }
 
     //delete
-    public void deleteComment(long commentId){
+    public Long deleteComment(long commentId){
         mCommentRepository.deleteById(commentId);
+        return 1L;
+    }
+
+    public CommentResponseListDto selectMyComment(long userId){
+        ArrayList<Comment> commentArrayList;
+        ArrayList<CommentResponseDto> commentResponseDtoArrayList = new ArrayList<>();
+        CommentResponseListDto commentResponseListDto;
+
+        commentArrayList = mCommentRepository.findByUserId(userId);
+        if(commentArrayList.size() > 0){
+            for(int i=0; i<commentArrayList.size();i++){
+                CommentResponseDto commentResponseDto = new CommentResponseDto(commentArrayList.get(i));
+                commentResponseDtoArrayList.add(commentResponseDto);
+            }
+            commentResponseListDto = new CommentResponseListDto(commentResponseDtoArrayList, 1L);
+        }
+        else{
+            commentResponseListDto = new CommentResponseListDto(commentResponseDtoArrayList, 0L);
+        }
+        return commentResponseListDto;
     }
 }
