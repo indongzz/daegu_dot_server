@@ -3,6 +3,7 @@ package com.kop.daegudot.web.dto.recommend;
 import com.kop.daegudot.domain.hashtag.Hashtag;
 import com.kop.daegudot.domain.mainschedule.MainSchedule;
 import com.kop.daegudot.domain.recommendschedule.RecommendSchedule;
+import com.kop.daegudot.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,7 +27,8 @@ public class RecommendScheduleRegisterDto {
         this.star = star;
     }
 
-    public RecommendSchedule toEntity(MainSchedule mainSchedule, ArrayList<Hashtag> hashtags, LocalDateTime datetime){
-        return RecommendSchedule.builder().mainSchedule(mainSchedule).title(title).content(content).hashtags(hashtags).datetime(datetime).star(star).build();
+    public RecommendSchedule toEntity(MainSchedule mainSchedule, ArrayList<Hashtag> hashtags, LocalDateTime datetime, User user){
+        return RecommendSchedule.builder().mainSchedule(mainSchedule).title(title).content(content).hashtags(hashtags)
+                .datetime(datetime).star(star).user(user).build();
     }
 }

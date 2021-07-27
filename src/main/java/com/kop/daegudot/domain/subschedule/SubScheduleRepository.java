@@ -7,5 +7,5 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public interface SubScheduleRepository extends JpaRepository<SubSchedule, Long> {
-    Optional<ArrayList<SubSchedule>> findByMainScheduleId(long id);
+    ArrayList<SubSchedule> findByMainScheduleId(long id);
 }

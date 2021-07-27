@@ -5,6 +5,7 @@ import com.kop.daegudot.domain.mainschedule.MainSchedule;
 import com.kop.daegudot.domain.recommendschedule.RecommendSchedule;
 import com.kop.daegudot.web.dto.mainshcedule.MainScheduleResponseDto;
 import com.kop.daegudot.web.dto.subschedule.SubScheduleResponseListDto;
+import com.kop.daegudot.web.dto.user.UserResponseDto;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class RecommendScheduleResponseDto {
     private String localDateTime;
     private double star;
     private MainScheduleResponseDto mainScheduleResponseDto;
+    private UserResponseDto userResponseDto;
 
     public RecommendScheduleResponseDto(RecommendSchedule recommendSchedule){
         this.id = recommendSchedule.getId();
@@ -29,5 +31,6 @@ public class RecommendScheduleResponseDto {
         this.hashtags = recommendSchedule.getHashtags();
         this.localDateTime = recommendSchedule.getDatetime().toString();
         this.star = recommendSchedule.getStar();
+        this.userResponseDto = new UserResponseDto(recommendSchedule.getUser());
     }
 }

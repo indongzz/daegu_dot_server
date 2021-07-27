@@ -19,7 +19,6 @@ public class Comment {
 
     private String comments;
     private LocalDateTime dateTime;
-    private int star;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -30,17 +29,15 @@ public class Comment {
     private RecommendSchedule recommendSchedule;
 
     @Builder
-    public Comment(LocalDateTime dateTime, String comments, int star, User user, RecommendSchedule recommendSchedule){
+    public Comment(LocalDateTime dateTime, String comments, User user, RecommendSchedule recommendSchedule){
         this.dateTime = dateTime;
         this.comments = comments;
-        this.star = star;
         this.user = user;
         this.recommendSchedule = recommendSchedule;
     }
 
-    public void update(LocalDateTime dateTime, String comments, int star){
+    public void update(LocalDateTime dateTime, String comments){
         this.dateTime = dateTime;
         this.comments = comments;
-        this.star = star;
     }
 }

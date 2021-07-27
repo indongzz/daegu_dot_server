@@ -11,10 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CommentUpdateDto {
     private String comments;
-    private int star;
 
     public CommentUpdateDto(String comments, int star){
         this.comments = comments;
-        this.star = star;
     }
 }
