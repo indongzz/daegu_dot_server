@@ -9,6 +9,7 @@ import com.kop.daegudot.domain.recommendschedule.RecommendScheduleRepository;
 import com.kop.daegudot.domain.user.User;
 import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.dto.recommend.*;
+import com.kop.daegudot.web.dto.user.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,22 +117,22 @@ public class RecommendService {
     }
 
     //SELECT * FROM RecommendSchedule WHERE UserId = ?
-    public RecommendScheduleResponseWithUserListDto findMyRecommendSchedule(long userId){
+    public RecommendScheduleResponseListDto findMyRecommendSchedule(long userId){
         List<RecommendSchedule> recommendScheduleList;
-        ArrayList<RecommendScheduleResponseWithUserDto> recommendScheduleResponseDtoArrayList = new ArrayList<>();
-        RecommendScheduleResponseWithUserListDto recommendScheduleResponseListDto;
+        ArrayList<RecommendScheduleResponseDto> recommendScheduleResponseDtoArrayList = new ArrayList<>();
+        RecommendScheduleResponseListDto recommendScheduleResponseListDto;
 
         recommendScheduleList = mRecommendScheduleRepository.findByUserId(userId);
         if(recommendScheduleList.size() > 0){
             for(int i=0; i<recommendScheduleList.size();i++){
-                RecommendScheduleResponseWithUserDto recommendScheduleResponseDto
-                        = new RecommendScheduleResponseWithUserDto(recommendScheduleList.get(i));
+                RecommendScheduleResponseDto recommendScheduleResponseDto
+                        = new RecommendScheduleResponseDto(recommendScheduleList.get(i));
                 recommendScheduleResponseDtoArrayList.add(recommendScheduleResponseDto);
             }
-            recommendScheduleResponseListDto = new RecommendScheduleResponseWithUserListDto(recommendScheduleResponseDtoArrayList, 1L);
+            recommendScheduleResponseListDto = new RecommendScheduleResponseListDto(recommendScheduleResponseDtoArrayList, 1L);
         }
         else{
-            recommendScheduleResponseListDto = new RecommendScheduleResponseWithUserListDto(recommendScheduleResponseDtoArrayList, 0L);
+            recommendScheduleResponseListDto = new RecommendScheduleResponseListDto(recommendScheduleResponseDtoArrayList, 0L);
         }
 
         return recommendScheduleResponseListDto;

@@ -21,6 +21,7 @@ public class RecommendScheduleResponseDto {
     private String localDateTime;
     private double star;
     private MainScheduleResponseDto mainScheduleResponseDto;
+    private UserResponseDto userResponseDto;
 
     public RecommendScheduleResponseDto(RecommendSchedule recommendSchedule){
         this.id = recommendSchedule.getId();
@@ -30,5 +31,6 @@ public class RecommendScheduleResponseDto {
         this.hashtags = recommendSchedule.getHashtags();
         this.localDateTime = recommendSchedule.getDatetime().toString();
         this.star = recommendSchedule.getStar();
+        this.userResponseDto = new UserResponseDto(recommendSchedule.getUser());
     }
 }
