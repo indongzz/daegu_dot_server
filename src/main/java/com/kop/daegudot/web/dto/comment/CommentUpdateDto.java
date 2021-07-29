@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class CommentUpdateDto {
     private String comments;
 
-    public CommentUpdateDto(String comments, int star){
+    public CommentUpdateDto(String comments){
         this.comments = comments;
     }
 }
