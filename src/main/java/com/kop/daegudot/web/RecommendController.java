@@ -56,7 +56,7 @@ public class RecommendController {
 
     //내 추천글 리스트
     @GetMapping("/more/recommend")
-    public ResponseEntity<RecommendScheduleResponseListDto> saveRecommendSchedule(HttpServletRequest request){
+    public ResponseEntity<RecommendScheduleResponseWithUserListDto> saveRecommendSchedule(HttpServletRequest request){
         String email = (String) request.getAttribute("email");
         UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
         return ResponseEntity.ok().body(mRecommendService.findMyRecommendSchedule(userResponseDto.getId()));

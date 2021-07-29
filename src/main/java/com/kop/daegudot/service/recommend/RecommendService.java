@@ -116,22 +116,22 @@ public class RecommendService {
     }
 
     //SELECT * FROM RecommendSchedule WHERE UserId = ?
-    public RecommendScheduleResponseListDto findMyRecommendSchedule(long userId){
+    public RecommendScheduleResponseWithUserListDto findMyRecommendSchedule(long userId){
         List<RecommendSchedule> recommendScheduleList;
-        ArrayList<RecommendScheduleResponseDto> recommendScheduleResponseDtoArrayList = new ArrayList<>();
-        RecommendScheduleResponseListDto recommendScheduleResponseListDto;
+        ArrayList<RecommendScheduleResponseWithUserDto> recommendScheduleResponseDtoArrayList = new ArrayList<>();
+        RecommendScheduleResponseWithUserListDto recommendScheduleResponseListDto;
 
         recommendScheduleList = mRecommendScheduleRepository.findByUserId(userId);
         if(recommendScheduleList.size() > 0){
             for(int i=0; i<recommendScheduleList.size();i++){
-                RecommendScheduleResponseDto recommendScheduleResponseDto
-                        = new RecommendScheduleResponseDto(recommendScheduleList.get(i));
+                RecommendScheduleResponseWithUserDto recommendScheduleResponseDto
+                        = new RecommendScheduleResponseWithUserDto(recommendScheduleList.get(i));
                 recommendScheduleResponseDtoArrayList.add(recommendScheduleResponseDto);
             }
-            recommendScheduleResponseListDto = new RecommendScheduleResponseListDto(recommendScheduleResponseDtoArrayList, 1L);
+            recommendScheduleResponseListDto = new RecommendScheduleResponseWithUserListDto(recommendScheduleResponseDtoArrayList, 1L);
         }
         else{
-            recommendScheduleResponseListDto = new RecommendScheduleResponseListDto(recommendScheduleResponseDtoArrayList, 0L);
+            recommendScheduleResponseListDto = new RecommendScheduleResponseWithUserListDto(recommendScheduleResponseDtoArrayList, 0L);
         }
 
         return recommendScheduleResponseListDto;
