@@ -35,7 +35,6 @@ public class UserService {
         return ResponseEntity.ok().body(token);
     }
 
-    @Transactional
     public Long saveGoogle(UserOauthRegisterDto userOauthRegisterDto){
         HttpTransport transport = new NetHttpTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
