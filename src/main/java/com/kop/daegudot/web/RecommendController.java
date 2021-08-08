@@ -23,7 +23,7 @@ public class RecommendController {
     public ResponseEntity<Long> saveRecommendSchedule(HttpServletRequest request,
                                                       @RequestBody RecommendScheduleRegisterDto recommendScheduleRegisterDto){
         String email = (String) request.getAttribute("email");
-        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email")).getUserResponseDto();
         Long recommendId = mRecommendService.saveRecommendSchedule(recommendScheduleRegisterDto, userResponseDto.getId());
         return ResponseEntity.ok().body(recommendId);
     }
@@ -58,7 +58,7 @@ public class RecommendController {
     @GetMapping("/more/recommend")
     public ResponseEntity<RecommendScheduleResponseListDto> listMyRecommendSchedule(HttpServletRequest request){
         String email = (String) request.getAttribute("email");
-        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email")).getUserResponseDto();
         return ResponseEntity.ok().body(mRecommendService.findMyRecommendSchedule(userResponseDto.getId()));
     }
 }
