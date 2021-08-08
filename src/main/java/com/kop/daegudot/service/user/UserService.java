@@ -41,7 +41,7 @@ public class UserService {
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-                .setAudience(Collections.singletonList("AIzaSyC_wQcbLsVDNlvRAWxo2h0qgsZqZDIYpQY"))
+                .setAudience(Collections.singletonList("783720840850-nem94b98bfa4mn0hhqnvn8pomvptmh53.apps.googleusercontent.com"))
                 .build();
 
         try {
