@@ -27,7 +27,7 @@ public class UserService {
     private final UserRepository mUserRepository;
     private final JwtTokenProvider mJwtTokenProvider;
 
-    @Value("${custom.oauth2.goole.client-id}")
+    @Value("${custom.oauth2.google.client-id}")
     private String GoogleOauthClientId;
 
     // INSERT
