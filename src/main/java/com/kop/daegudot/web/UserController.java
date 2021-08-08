@@ -31,8 +31,14 @@ public class UserController {
     }
 
     //Duplicate Check - Email
+    @GetMapping("/user/register/nickname/{nickname}")
+    public UserResponseStatusDto findByNickname(@PathVariable String nickname) {
+        return mUserService.findByNickname(nickname);
+    }
+
+    //Duplicate Check - Email
     @GetMapping("/user/register/email/{email}")
-    public UserResponseDto findByEmail(@PathVariable String email) {
+    public UserResponseStatusDto findByEmail(@PathVariable String email) {
         return mUserService.findByEmail(email);
     }
 
@@ -40,7 +46,7 @@ public class UserController {
     @PutMapping("/user/update/nickname")
     public ResponseEntity<Long> updateNickname(HttpServletRequest request, @RequestBody UserUpdateNicknameDto userUpdateNicknameDto){
         String email = (String) request.getAttribute("email");
-        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email")).getUserResponseDto();
         Long userId = mUserService.updateNicknameById(userResponseDto.getId(), userUpdateNicknameDto);
         return ResponseEntity.ok().body(userId);
     }
@@ -49,7 +55,7 @@ public class UserController {
     @PutMapping("/user/update/password")
     public ResponseEntity<Long> updatePassword(HttpServletRequest request, @RequestBody UserUpdatePasswordDto userUpdatePasswordDto){
         String email = (String) request.getAttribute("email");
-        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email")).getUserResponseDto();
         Long userId = mUserService.updatePasswordById(userResponseDto.getId(), userUpdatePasswordDto);
         return ResponseEntity.ok().body(userId);
     }
@@ -64,7 +70,7 @@ public class UserController {
     @GetMapping("/user/info")
     public ResponseEntity<UserResponseDto> getUserFromToken(HttpServletRequest request){
         String email = (String) request.getAttribute("email");
-        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email")).getUserResponseDto();
         return ResponseEntity.ok().body(userResponseDto);
     }
 }

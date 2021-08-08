@@ -33,7 +33,7 @@ public class CommentController {
     @PostMapping("/comment/register")
     public ResponseEntity<Long> saveComment(HttpServletRequest request, @RequestBody CommentRegisterDto commentRegisterDto){
         String email = (String) request.getAttribute("email");
-        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email")).getUserResponseDto();
         Long commentId = mCommentService.saveComment(commentRegisterDto, userResponseDto.getId());
         return ResponseEntity.ok().body(commentId);
     }
@@ -54,7 +54,7 @@ public class CommentController {
     @GetMapping("/more/comment")
     public ResponseEntity<CommentResponseListDto> selectMyComment(HttpServletRequest request){
         String email = (String) request.getAttribute("email");
-        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email"));
+        UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email")).getUserResponseDto();
         CommentResponseListDto commentResponseListDto = mCommentService.selectMyComment(userResponseDto.getId());
         return ResponseEntity.ok().body(commentResponseListDto);
     }

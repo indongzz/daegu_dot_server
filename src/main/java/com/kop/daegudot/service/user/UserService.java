@@ -60,18 +60,27 @@ public class UserService {
     }
 
     // SELECT * FROM USER WHERE email = ?
-    public UserResponseDto findByEmail(String email) {
+    public UserResponseStatusDto findByEmail(String email) {
+        UserResponseStatusDto userResponseStatusDto;
         User user = mUserRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User 조회 오류: " + email));
-        return new UserResponseDto(user);
+        UserResponseDto userResponseDto = new UserResponseDto(user);
+
+        if(userResponseDto != null) userResponseStatusDto = new UserResponseStatusDto(userResponseDto, 1L);
+        else userResponseStatusDto = new UserResponseStatusDto(userResponseDto, 0L);
+        return userResponseStatusDto;
     }
 
     // SELECT * FROM USER WHERE nickname = ?
-    public UserResponseDto findByNickname(String nickname) {
-        System.out.println(nickname);
+    public UserResponseStatusDto findByNickname(String nickname) {
+        UserResponseStatusDto userResponseStatusDto;
         User user = mUserRepository.findByNickname(nickname)
                 .orElseThrow(() -> new IllegalArgumentException("User 조회 오류: " + nickname));
-        return new UserResponseDto(user);
+        UserResponseDto userResponseDto = new UserResponseDto(user);
+
+        if(userResponseDto != null) userResponseStatusDto = new UserResponseStatusDto(userResponseDto, 1L);
+        else userResponseStatusDto = new UserResponseStatusDto(userResponseDto, 0L);
+        return userResponseStatusDto;
     }
 
     // UPDATE NICKNAME
