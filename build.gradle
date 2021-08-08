@@ -42,7 +42,4 @@ dependencies {
     // MariaDB
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
-    // google oauth
-    implementation group: 'com.google.api-client', name: 'google-api-client-jackson2', version: '1.30.10'
-    implementation 'com.google.api-client:google-api-client:1.31.5'
 }

@@ -16,7 +16,4 @@
 # add .gitignore
 /.idea
 
-# add client id
-/src/main/java/com/kop/daegudot/web/dto/user/OauthClientID.java
-
 /out
