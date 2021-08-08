@@ -11,6 +11,7 @@ import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.JWT.JwtTokenProvider;
 import com.kop.daegudot.web.dto.user.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,9 @@ public class UserService {
     private final UserRepository mUserRepository;
     private final JwtTokenProvider mJwtTokenProvider;
 
+    @Value("${custom.oauth2.goole.client-id}")
+    private String GoogleOauthClientId;
+
     // INSERT
     @Transactional
     public ResponseEntity<String> save(UserRegisterDto userSaveRequestDto) {
@@ -40,7 +44,7 @@ public class UserService {
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-                .setAudience(Collections.singletonList(OauthClientID.GoogleOauthClientId))
+                .setAudience(Collections.singletonList(GoogleOauthClientId))
                 .build();
 
         try {
