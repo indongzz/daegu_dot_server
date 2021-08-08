@@ -23,6 +23,13 @@ public class UserController {
         return mUserService.save(userSaveRequestDto);
     }
 
+    //google
+    @PostMapping("/user/register/google")
+    public ResponseEntity<Long> saveGoogle(@RequestBody UserOauthRegisterDto userOauthRegisterDto){
+        Long status = mUserService.saveGoogle(userOauthRegisterDto);
+        return ResponseEntity.ok().body(status);
+    }
+
     //Duplicate Check - Email
     @GetMapping("/user/register/email/{email}")
     public UserResponseDto findByEmail(@PathVariable String email) {

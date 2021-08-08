@@ -1,14 +1,23 @@
 package com.kop.daegudot.service.user;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.kop.daegudot.domain.user.User;
 import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.JWT.JwtTokenProvider;
-import com.kop.daegudot.web.dto.TokenResponseDto;
 import com.kop.daegudot.web.dto.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 
 
 @RequiredArgsConstructor
@@ -24,6 +33,27 @@ public class UserService {
         mUserRepository.save(userSaveRequestDto.toEntity(token));
 
         return ResponseEntity.ok().body(token);
+    }
+
+    @Transactional
+    public Long saveGoogle(UserOauthRegisterDto userOauthRegisterDto){
+        HttpTransport transport = new NetHttpTransport();
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+                .setAudience(Collections.singletonList("AIzaSyC_wQcbLsVDNlvRAWxo2h0qgsZqZDIYpQY"))
+                .build();
+
+        try {
+            GoogleIdToken idToken = verifier.verify(userOauthRegisterDto.getOauthToken());
+            return 1L;
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return 0L;
     }
 
     // SELECT * FROM USER WHERE email = ?
