@@ -2,10 +2,7 @@ package com.kop.daegudot.web;
 
 import com.kop.daegudot.service.comment.CommentService;
 import com.kop.daegudot.service.user.UserService;
-import com.kop.daegudot.web.dto.comment.CommentRegisterDto;
-import com.kop.daegudot.web.dto.comment.CommentResponseDto;
-import com.kop.daegudot.web.dto.comment.CommentResponseListDto;
-import com.kop.daegudot.web.dto.comment.CommentUpdateDto;
+import com.kop.daegudot.web.dto.comment.*;
 import com.kop.daegudot.web.dto.user.UserLoginDto;
 import com.kop.daegudot.web.dto.user.UserRegisterDto;
 import com.kop.daegudot.web.dto.user.UserResponseDto;
@@ -31,11 +28,10 @@ public class CommentController {
 
     //추천글마다 댓글 등록하기
     @PostMapping("/comment/register")
-    public ResponseEntity<Long> saveComment(HttpServletRequest request, @RequestBody CommentRegisterDto commentRegisterDto){
+    public ResponseEntity<CommentRegisterResponseDto> saveComment(HttpServletRequest request, @RequestBody CommentRegisterDto commentRegisterDto){
         String email = (String) request.getAttribute("email");
         UserResponseDto userResponseDto = mUserService.findByEmail((String) request.getAttribute("email")).getUserResponseDto();
-        Long commentId = mCommentService.saveComment(commentRegisterDto, userResponseDto.getId());
-        return ResponseEntity.ok().body(commentId);
+        return ResponseEntity.ok().body(mCommentService.saveComment(commentRegisterDto, userResponseDto.getId()));
     }
 
     //추천글마다 댓글 수정하기

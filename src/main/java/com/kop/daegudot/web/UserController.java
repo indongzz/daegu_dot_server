@@ -20,7 +20,7 @@ public class UserController {
     //TODO: 회원가입 -> 디비 저장, 로그인 -> 토큰 주기
     @PostMapping("/user/register")
     public ResponseEntity<String> save(@RequestBody UserRegisterDto userSaveRequestDto) {
-        return mUserService.save(userSaveRequestDto);
+        return ResponseEntity.ok().body(mUserService.save(userSaveRequestDto));
     }
 
     //google

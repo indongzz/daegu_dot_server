@@ -7,10 +7,7 @@ import com.kop.daegudot.domain.recommendschedule.RecommendSchedule;
 import com.kop.daegudot.domain.recommendschedule.RecommendScheduleRepository;
 import com.kop.daegudot.domain.user.User;
 import com.kop.daegudot.domain.user.UserRepository;
-import com.kop.daegudot.web.dto.comment.CommentRegisterDto;
-import com.kop.daegudot.web.dto.comment.CommentResponseDto;
-import com.kop.daegudot.web.dto.comment.CommentResponseListDto;
-import com.kop.daegudot.web.dto.comment.CommentUpdateDto;
+import com.kop.daegudot.web.dto.comment.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,13 +46,16 @@ public class CommentService {
 
     //Insert
     @Transactional
-    public Long saveComment(CommentRegisterDto commentRegisterDto, long userId){
+    public CommentRegisterResponseDto saveComment(CommentRegisterDto commentRegisterDto, long userId){
+        CommentRegisterResponseDto commentRegisterResponseDto;
         LocalDateTime localDateTime = LocalDateTime.now();
         User user = mUserRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("There is no id =" + userId));
         RecommendSchedule recommendSchedule = mRecommendScheduleRepository.findById(commentRegisterDto.getRecommendScheduleId())
                 .orElseThrow(() -> new IllegalArgumentException("There is no id =" + commentRegisterDto.getRecommendScheduleId()));
-        return mCommentRepository.save(commentRegisterDto.toEntity(user, recommendSchedule, localDateTime)).getId();
+        long id = mCommentRepository.save(commentRegisterDto.toEntity(user, recommendSchedule, localDateTime)).getId();
+        commentRegisterResponseDto = new CommentRegisterResponseDto(id, localDateTime);
+        return commentRegisterResponseDto;
     }
 
     //Update
