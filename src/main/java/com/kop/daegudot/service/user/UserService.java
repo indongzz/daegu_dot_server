@@ -32,11 +32,11 @@ public class UserService {
 
     // INSERT
     @Transactional
-    public ResponseEntity<String> save(UserRegisterDto userSaveRequestDto) {
+    public String save(UserRegisterDto userSaveRequestDto) {
         String token = mJwtTokenProvider.createToken(userSaveRequestDto.getEmail());
         mUserRepository.save(userSaveRequestDto.toEntity(token));
 
-        return ResponseEntity.ok().body(token);
+        return token;
     }
 
     public Long saveGoogle(UserOauthRegisterDto userOauthRegisterDto){
