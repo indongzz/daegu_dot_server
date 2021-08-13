@@ -15,6 +15,7 @@ public class PlacesResponseDto {
     private String attractName;
     private String homepage;
     private String telephone;
+    private String category;
 
     public PlacesResponseDto(Places places){
         this.id = places.getId();
@@ -25,5 +26,6 @@ public class PlacesResponseDto {
         this.attractName = places.getAttractName();
         this.homepage = places.getHomepage();
         this.telephone = places.getHomepage();
+        this.category = places.getCategory();
     }
 }
