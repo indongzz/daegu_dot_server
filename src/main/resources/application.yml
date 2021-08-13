@@ -14,3 +14,9 @@ server:
 #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 #    generate-ddl: true # Make DDL and apply to DB
 #    show-sql: true
+
+custom:
+  oauth2:
+    google:
+      client-id:
+        123
