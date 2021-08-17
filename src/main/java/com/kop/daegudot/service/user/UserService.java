@@ -59,6 +59,12 @@ public class UserService {
         return 0L;
     }
 
+    //kakao
+    public Long saveKakao(UserOauthRegisterDto userOauthRegisterDto) {
+        //redirect url이 문제인데...
+        return 0L;
+    }
+
     // SELECT * FROM USER WHERE email = ?
     public UserResponseDto findByEmail(String email) {
         User user = mUserRepository.findByEmail(email)

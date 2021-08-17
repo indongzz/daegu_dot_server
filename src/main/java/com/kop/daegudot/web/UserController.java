@@ -30,6 +30,14 @@ public class UserController {
         return ResponseEntity.ok().body(status);
     }
 
+    //kakao
+    @PostMapping("/user/register/kakao")
+    public ResponseEntity<Long> saveKaKao(@RequestBody UserOauthRegisterDto userOauthRegisterDto){
+        Long status = mUserService.saveKakao(userOauthRegisterDto);
+        return ResponseEntity.ok().body(status);
+    }
+
+
     //Duplicate Check - Email
     @GetMapping("/user/register/email/{email}")
     public UserResponseDto findByEmail(@PathVariable String email) {
