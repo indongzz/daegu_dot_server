@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.*;
 
+import com.kop.daegudot.domain.recommendschedule.RecommendSchedule;
 import com.kop.daegudot.domain.subschedule.SubSchedule;
 import com.kop.daegudot.domain.user.User;
 import lombok.Builder;
@@ -28,6 +29,9 @@ public class MainSchedule {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToOne(mappedBy = "mainSchedule", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private RecommendSchedule recommendSchedule;
 
     @Builder
     public MainSchedule(LocalDate startDate, LocalDate endDate, User user) {
