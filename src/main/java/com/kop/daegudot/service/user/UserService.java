@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
@@ -61,7 +64,17 @@ public class UserService {
 
     //kakao
     public Long saveKakao(UserOauthRegisterDto userOauthRegisterDto) {
-        //redirect url이 문제인데...
+        try{
+            URL url = new URL("https://kapi.kakao.com/v1/user/access_token_info");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestProperty("Authorization", "Bearer " + userOauthRegisterDto.getOauthToken().trim());
+            int responseCode = conn.getResponseCode();
+
+            if(responseCode > 0) return 1L;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return 0L;
     }
 
