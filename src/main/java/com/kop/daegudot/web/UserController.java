@@ -25,16 +25,14 @@ public class UserController {
 
     //google
     @PostMapping("/user/register/google")
-    public ResponseEntity<Long> saveGoogle(@RequestBody UserOauthRegisterDto userOauthRegisterDto){
-        Long status = mUserService.saveGoogle(userOauthRegisterDto);
-        return ResponseEntity.ok().body(status);
+    public ResponseEntity<UserOauthResponseDto> saveGoogle(@RequestBody UserOauthRegisterDto userOauthRegisterDto){
+        return ResponseEntity.ok().body(mUserService.saveGoogle(userOauthRegisterDto));
     }
 
     //kakao
     @PostMapping("/user/register/kakao")
-    public ResponseEntity<Long> saveKaKao(@RequestBody UserOauthRegisterDto userOauthRegisterDto){
-        Long status = mUserService.saveKakao(userOauthRegisterDto);
-        return ResponseEntity.ok().body(status);
+    public ResponseEntity<UserOauthResponseDto> saveKaKao(@RequestBody UserOauthRegisterDto userOauthRegisterDto){
+        return ResponseEntity.ok().body(mUserService.saveKakao(userOauthRegisterDto));
     }
 
 

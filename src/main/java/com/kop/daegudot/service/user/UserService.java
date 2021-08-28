@@ -1,5 +1,7 @@
 package com.kop.daegudot.service.user;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
@@ -11,15 +13,16 @@ import com.kop.daegudot.domain.user.UserRepository;
 import com.kop.daegudot.web.JWT.JwtTokenProvider;
 import com.kop.daegudot.web.dto.user.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
@@ -42,7 +45,8 @@ public class UserService {
         return token;
     }
 
-    public Long saveGoogle(UserOauthRegisterDto userOauthRegisterDto){
+    public UserOauthResponseDto saveGoogle(UserOauthRegisterDto userOauthRegisterDto){
+        UserOauthResponseDto userOauthResponseDto = new UserOauthResponseDto(0L, null, null);
         HttpTransport transport = new NetHttpTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
@@ -52,18 +56,25 @@ public class UserService {
 
         try {
             GoogleIdToken idToken = verifier.verify(userOauthRegisterDto.getOauthToken());
-            return 1L;
+            GoogleIdToken.Payload payload = idToken.getPayload();
+
+            String email = payload.getEmail();
+            String name = payload.get("name").toString();
+
+            userOauthResponseDto.setEmail(email);
+            userOauthResponseDto.setNickname(name);
+            userOauthResponseDto.setStatus(1L);
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return 0L;
+        return userOauthResponseDto;
     }
 
     //kakao
-    public Long saveKakao(UserOauthRegisterDto userOauthRegisterDto) {
+    /*public UserOauthResponseDto saveKakao(UserOauthRegisterDto userOauthRegisterDto) {
         try{
             URL url = new URL("https://kapi.kakao.com/v1/user/access_token_info");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -76,7 +87,43 @@ public class UserService {
             e.printStackTrace();
         }
         return 0L;
+    }*/
+    public UserOauthResponseDto saveKakao(UserOauthRegisterDto userOauthRegisterDto) {
+        UserOauthResponseDto userOauthResponseDto = new UserOauthResponseDto(0L, null, null);
+
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost("https://kapi.kakao.com/v2/user/me");
+
+        post.addHeader("Authorization", "Bearer " + userOauthRegisterDto.getOauthToken());
+
+        JsonNode result = null;
+
+        try{
+            HttpResponse response = httpClient.execute(post);
+            int responseCode = response.getStatusLine().getStatusCode();
+
+            ObjectMapper mapper = new ObjectMapper();
+            result = mapper.readTree(response.getEntity().getContent());
+
+            if(result != null){
+                JsonNode properties = result.path("properties");
+                JsonNode kakao_acount = result.path("kakao_account");
+
+                String email = kakao_acount.path("email").asText();
+                String name = properties.path("nickname").asText();
+
+                userOauthResponseDto.setStatus(1L);
+                userOauthResponseDto.setEmail(email);
+                userOauthResponseDto.setNickname(name);
+            }
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return userOauthResponseDto;
     }
+
 
     // SELECT * FROM USER WHERE email = ?
     public UserResponseStatusDto findByEmail(String email) {
