@@ -56,14 +56,14 @@ public class UserService {
 
         try {
             GoogleIdToken idToken = verifier.verify(userOauthRegisterDto.getOauthToken());
-            GoogleIdToken.Payload payload = idToken.getPayload();
+            if(idToken != null) {
+                String email = idToken.getPayload().getEmail();
+                String name = idToken.getPayload().get("name").toString();
 
-            String email = payload.getEmail();
-            String name = payload.get("name").toString();
-
-            userOauthResponseDto.setEmail(email);
-            userOauthResponseDto.setNickname(name);
-            userOauthResponseDto.setStatus(1L);
+                userOauthResponseDto.setEmail(email);
+                userOauthResponseDto.setNickname(name);
+                userOauthResponseDto.setStatus(1L);
+            }
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         } catch (IOException e) {
