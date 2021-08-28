@@ -6,6 +6,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.Json;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.kop.daegudot.domain.user.User;
@@ -19,6 +20,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +47,7 @@ public class UserService {
         return token;
     }
 
-    public UserOauthResponseDto saveGoogle(UserOauthRegisterDto userOauthRegisterDto){
+    /*public UserOauthResponseDto saveGoogle(UserOauthRegisterDto userOauthRegisterDto){
         UserOauthResponseDto userOauthResponseDto = new UserOauthResponseDto(0L, null, null);
         HttpTransport transport = new NetHttpTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
@@ -67,6 +69,32 @@ public class UserService {
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return userOauthResponseDto;
+    }*/
+    public UserOauthResponseDto saveGoogle(UserOauthRegisterDto userOauthRegisterDto){
+        UserOauthResponseDto userOauthResponseDto = new UserOauthResponseDto(0L, null, null);
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost("https://oauth2.googleapis.com/tokeninfo?id_token=" + userOauthRegisterDto.getOauthToken());
+        JsonNode result = null;
+
+        try{
+            HttpResponse response = httpClient.execute(post);
+            ObjectMapper mapper = new ObjectMapper();
+            result = mapper.readTree(response.getEntity().getContent());
+
+            if(result != null){
+                String email = result.path("email").asText();
+                String name = result.path("name").asText();
+
+                userOauthResponseDto.setStatus(1L);
+                userOauthResponseDto.setEmail(email);
+                userOauthResponseDto.setNickname(name);
+            }
+
+        } catch (IOException e){
             e.printStackTrace();
         }
 
